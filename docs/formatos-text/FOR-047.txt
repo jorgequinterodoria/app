@@ -1,0 +1,200 @@
+                            SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                           Código: FOR-047
+                                  FORMATO DE GESTIÓN DE ACCION
+                                                                                             Versión: 001
+                                CORRECTIVA, PREVENTIVA Y DE MEJORA
+                                                                                            Página 1 de 4
+
+
+FECHA DE IDENTIFICACIÓN DE LA NO CONFORMIDAD:                 FECHA DE ANALISIS DE LA NO
+                                                              CONFORMIDAD:
+
+     PROYECTO: AMPLIACIÓN DE LA INFRAESTRUCTURA FÍSICA DE LA INSTITUCIÓN EDUCATIVA
+                         COMFACOR “JAIME EXBRAYAT”, FASE III
+AREA DE OCURRENCIA:                                            ACTIVIDAD:
+Escribir área donde se identificó la NC                        Escribir actividad donde se presenta la NC
+RESPONSABLE DEL AREA:                                          RESPONSABLE DE LA ACTIVIDAD:
+Escribir nombre y cargo del responsable del área               Escribir nombre y cargo del responsable de la
+                                                               actividad
+
+TIPO DE ACCIÓN               FUENTE DE LA ACCION
+
+                                Auditoria interna
+
+                                Análisis de datos del sistema (Indicadores de Gestión)
+   PREVENTIVA
+                                Análisis del reporte de accidentes de trabajo
+   MEJORA
+                                Resultados de la revisión por la dirección
+   CORRECTIVA
+                                Inspecciones de seguridad
+                                Otra
+                                       ¿Cuál? Describa la otra fuente
+
+
+
+
+                                                                REAL         POTENCIAL
+            DESCRIPCIÓN DE LA NO CONFORMIDAD
+
+
+
+
+                         Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                 Tel: 3213404434
+                                      E-mail: comfacor2026fase3@gmail.com
+                          SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                         Código: FOR-047
+                               FORMATO DE GESTIÓN DE ACCION
+                                                                                           Versión: 001
+                             CORRECTIVA, PREVENTIVA Y DE MEJORA
+                                                                                          Página 2 de 4
+
+Describa la no conformidad
+
+
+
+
+           BENEFICIO GENERADO (Campo requerido específicamente para Acción de Mejora)
+
+Describa el beneficio que genera la implementación de la acción de mejora
+
+
+
+
+  ANALISIS DE CAUSAS (Campo requerido específicamente para acciones correctivas y preventivas)
+                                      DESCRIPCIÓN DE LA CAUSA
+Describa la causa identificada luego de aplicar un instrumento de análisis. Se debe anexar la aplicación
+del instrumento a este documento.
+
+
+
+
+                                                 Causa/Efecto        5 ¿Por qué?          Otro
+Instrumento de Análisis de Causa utilizado:                                                      ¿Cuál?
+                       Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                               Tel: 3213404434
+                                    E-mail: comfacor2026fase3@gmail.com
+                            SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                          Código: FOR-047
+                                 FORMATO DE GESTIÓN DE ACCION
+                                                                                            Versión: 001
+                               CORRECTIVA, PREVENTIVA Y DE MEJORA
+                                                                                           Página 3 de 4
+
+Especifique
+
+
+                                            PLAN DE ACCIÓN
+No    DESCRIPCIÓN DE LA                                    IMPLEMENTACIÓN
+             ACCION                     RESPONSABLE              FECHA INICIO         FECHA FIN
+     Describa la acción a      Escriba el Nombre y Cargo del     Fecha de inicio Fecha de fin
+1    implementar               responsable de la implementación
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de Inicio     Fecha de fin
+2    implementar               responsable de la implementación
+
+     Describa la acción a      Describa la acción a implementar       Fecha de inicio     Fecha de fin
+3    implementar
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de inicio     Fecha de fin
+4    implementar               responsable de la implementación
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de inicio     Fecha de fin
+5    implementar               responsable de la implementación
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de inicio     Fecha de fin
+6    implementar               responsable de la implementación
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de inicio     Fecha de fin
+7    implementar               responsable de la implementación
+
+     Describa la acción a      Escriba el Nombre y Cargo del          Fecha de inicio     Fecha de fin
+8    implementar               responsable de la implementación
+
+
+
+
+              Participantes del análisis de las acciones correctivas, preventivas y de mejora.
+Responsable del SG-SST             Nombre: Escribir nombre                 Firma
+
+Miembro del Comité                 Nombre: Escribir nombre                 Firma
+
+Responsable del área               Nombre: Escribir nombre                 Firma
+
+Otro, Cual:                        Nombre: Escribir nombre                 Firma
+
+
+
+
+                        Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                Tel: 3213404434
+                                     E-mail: comfacor2026fase3@gmail.com
+                           SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                          Código: FOR-047
+                                FORMATO DE GESTIÓN DE ACCION
+                                                                                            Versión: 001
+                              CORRECTIVA, PREVENTIVA Y DE MEJORA
+                                                                                           Página 4 de 4
+
+
+                             SEGUIMIENTO Y EJECUCION PLAN DE ACCIÓN
+                                                  FECHA
+                                                           DESCRIPCION DE LA                   % EJECUCION
+No     DESCRIPCIÓN DE LA ACCIÓN                SEGUIMIENT
+                                                               EJECUCION                       ALCANZADO
+                                                     O
+   Describa la acción a la que se le realiza   Fecha de    Describir lo ejecutado           % de ejecución
+ 1
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realiza   Fecha de    Describir lo ejecutado           % de ejecución
+ 2
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 3
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 4
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 5
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 6
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 7
+   seguimiento                                 seguimiento
+   Describa la acción a la que se le realizará Fecha de    Describir lo ejecutado           % de ejecución
+ 8
+   seguimiento                                 seguimiento
+
+
+
+Escribir el nombre de quien realiza el seguimiento y cargo
+
+
+Firma________________________________________
+
+
+
+
+                               VERIFICACIÓN DE EFICACIA
+FECHA DE REALIZACIÓN DE LA VERIFICACIÓN DE EFICACIA: Escribir la fecha de verificación de la
+eficacia de las acciones
+                                          SI       NO
+¿EL PLAN DE ACCIÓN FUE EFICAZ?
+
+EVIDENCIAS OBJETIVAS:
+Describir las evidencias para la validación de la eficacia de las acciones implementadas y cierre.
+
+MODO DE VERIFICACION:
+Describir el modo de cómo se verificó la eficacia de las acciones implementadas.
+
+
+
+
+                        Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                Tel: 3213404434
+                                     E-mail: comfacor2026fase3@gmail.com
+

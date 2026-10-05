@@ -1,0 +1,266 @@
+                            SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                       Código: FOR-057
+                                        FORMATO DE INFORME DE
+                                    INVESTIGACIÓN DE ACCIDENTES DE                         Versión: 001
+                                               TRABAJO
+                                                                                           Página 1 de 5
+
+ I.       IDENTIFICACIÓN DE LA EMPRESA:
+
+          •   Razón social: Haga clic aquí para escribir texto.
+          •   Nit: Haga clic aquí para escribir texto.
+          •   Actividad económica: Haga clic aquí para escribir texto.
+          •   Dirección: Haga clic aquí para escribir texto.
+          •   Teléfono: Haga clic aquí para escribir texto.
+          •   Correo electrónico: Haga clic aquí para escribir texto.
+          •   Empresa: Haga clic aquí para escribir texto.
+
+ II.      IDENTIFICACIÓN DEL EMPLEADO ACCIDENTADO:
+
+          •   Nombre: Haga clic aquí para escribir texto.
+          •   Documento de identificación: Haga clic aquí para escribir texto.
+          •   Género: Haga clic aquí para escribir texto.
+          •   Edad: Haga clic aquí para escribir texto.
+          •   Fecha de nacimiento: Haga clic aquí para escribir texto.
+          •   Dirección de residencia: Haga clic aquí para escribir texto.
+          •   Teléfono: Haga clic aquí para escribir texto.
+          •   Fecha de ingreso a la empresa: Haga clic aquí para escribir texto.
+          •   Tipo de vinculación: Haga clic aquí para escribir texto.
+          •   Cargo: Haga clic aquí para escribir texto.
+          •   Sueldo: Haga clic aquí para escribir texto.
+
+III.      OBJETIVO DE LA INVESTIGACIÓN Y METODOLOGIA
+
+      •   Objetivo: Realizar la investigación del accidente de trabajo para dar cumplimiento a la Resolución
+          1401 del 24 de mayo del 2007 y el Decreto Único Reglamentario del Sector Trabajo – Decreto 1072
+          del 2015.
+
+      •   Metodología: La metodología utilizada es la establecida en el Sistema de Gestión de Seguridad y
+          salud en el trabajo del proyecto, a través del procedimiento de investigación de accidentes de
+          trabajo, la cual se resume en los siguientes pasos:
+
+                  1. Conformación de equipo investigador.
+
+                         Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                 Tel: 3213404434
+                                      E-mail: comfacor2026fase3@gmail.com
+                                         SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                                    Código: FOR-057
+                                                   FORMATO DE INFORME DE
+                                               INVESTIGACIÓN DE ACCIDENTES DE                          Versión: 001
+                                                          TRABAJO
+                                                                                                       Página 2 de 5
+
+                               2. Recolección de información a través de la entrevista y registros fotográficos.
+                               3. Análisis de la causalidad de la accidentalidad utilizando el diagrama de Árbol de
+                                  causas.
+                               4. Definición de las medidas y acciones correctivas.
+                               5. Elaboración del plan de acción.
+                               6. Establecimiento de indicadores y seguimiento del impacto.
+
+            IV.       CONFORMACION DEL EQUIPO INVESTIGADOR
+
+           NOMBRE                           CARGO                DEPARTAMENTO                 MUNICIPIO                DIRECCIÓN
+Haga clic aquí para escribir         Haga clic aquí para         Haga clic aquí para      Haga clic aquí para Haga clic aquí para
+texto.                               escribir texto.               escribir texto.          escribir texto.   escribir texto.
+Haga clic aquí para escribir         Haga clic aquí para         Haga clic aquí para      Haga clic aquí para Haga clic aquí para
+texto.                               escribir texto.               escribir texto.          escribir texto.   escribir texto.
+Haga clic aquí para escribir         Haga clic aquí para         Haga clic aquí para      Haga clic aquí para Haga clic aquí para
+texto.                               escribir texto.               escribir texto.          escribir texto.   escribir texto.
+Haga clic aquí para escribir         Haga clic aquí para         Haga clic aquí para      Haga clic aquí para Haga clic aquí para
+texto.                               escribir texto.               escribir texto.          escribir texto.   escribir texto.
+
+            V.        DESCRIPCIÓN DEL ACCIDENTE:
+
+                  •    Fecha del accidente: Haga clic aquí para escribir una fecha.
+                  •    Hora del accidente: Haga clic aquí para escribir texto.
+                  •    Día de la semana en que ocurrió el accidente: Haga clic aquí para escribir texto.
+                  •    Jornada en la que ocurrió el accidente: ☐ Normal           ☐ Extra
+                  •    Tiempo laborado previo al accidente: Haga clic aquí para escribir texto.
+                  •    Tipo de accidente:
+                                ☐ Propio del trabajo ☐ Violencia ☐ Transito ☐ Deportivo ☐ Recreativo
+                                                                   ☐ En Misión
+                  •    Lugar donde se encontraba el trabajador cuando ocurrió el accidente: Haga clic aquí para
+                       escribir texto.
+                  •    Sitio donde se encontraba el trabajador cuando ocurrió el accidente: Haga clic aquí para
+                       escribir texto.
+                  •    Actividad que realizaba el trabajador: Haga clic aquí para escribir texto.
+                  •    ¿Era su trabajo habitual? ☐ SI       ☐ NO
+                  •    ¿Se ha realizado evaluación de riesgos de la actividad? ☐ SI          ☐ NO
+                                     Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                             Tel: 3213404434
+                                                  E-mail: comfacor2026fase3@gmail.com
+                     SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                 Código: FOR-057
+                                 FORMATO DE INFORME DE
+                             INVESTIGACIÓN DE ACCIDENTES DE                          Versión: 001
+                                        TRABAJO
+                                                                                     Página 3 de 5
+
+•   ¿Qué hecho anormal que se apartase del proceso habitual de trabajo desencadenó el
+    accidente? (Desviación) Haga clic aquí para escribir texto.
+•   ¿Cómo se ha lesionado la persona accidentada? Especificar tipo de lesión, parte de cuerpo
+    afectada, mecanismo del accidente y agente del accidente. Haga clic aquí para escribir texto.
+•   IPS que atendió al trabajador lesionado: Haga clic aquí para escribir texto.
+•   Generó Incapacidad: ☐ SI          ☐ NO Si la respuesta es sí, indique:
+               o     Cuantos días: Haga clic aquí para escribir texto.
+               o     Fecha de inicio: Haga clic aquí para escribir una fecha.
+               o     Fecha de fin: Haga clic aquí para escribir una fecha.
+•   ¿Se cuenta testigos del accidente? ☐ SI          ☐ NO
+•   Nombre del Testigo: Haga clic aquí para escribir texto.
+•   Documento de identificación: Haga clic aquí para escribir texto.
+•   Descripción de lo sucedido realizada por el testigo:
+    Haga clic aquí para escribir texto.
+•   Importante: Anexar a este informe
+      o    ED-ER-002 Reporte Interno de Incidentes/Accidentes de Trabajo
+      o    ED-ER-003 Entrevista a Testigos de Incidentes y Accidentes de Trabajo, cuando
+           aplique
+•   ¿Había ocurrido eventos similares anteriormente? ☐ SI             ☐ NO
+
+•   ¿Se han presentado otros accidentes en el área de trabajo? ☐ SI             ☐ NO
+•   ¿Los accidentes presentados fueron investigados? ☐ SI                ☐ NO ☐ NO APLICA
+
+•   ¿El trabajador ha estado involucrado en otros accidentes? ☐ SI              ☐ NO
+
+•   ¿Se cuenta con panorama de riesgos? ☐ SI             ☐ NO
+•   ¿Se había considerado esta condición como prioritaria en el panorama de riesgos?
+    ☐ SI    ☐ NO
+
+•   ¿El trabajador necesitaba los EPP? ☐ SI           ☐ NO
+    Especifique cuales:
+    Haga clic aquí para escribir texto.
+•   ¿El trabajador estaba utilizando los EPP? ☐ SI          ☐ NO
+    Especifique cuales:
+                   Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                           Tel: 3213404434
+                                E-mail: comfacor2026fase3@gmail.com
+                                            SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                                               Código: FOR-057
+                                                         FORMATO DE INFORME DE
+                                                     INVESTIGACIÓN DE ACCIDENTES DE                               Versión: 001
+                                                                TRABAJO
+                                                                                                                 Página 4 de 5
+
+                            Haga clic aquí para escribir texto.
+          •                 Haga una descripción detallada del accidente:
+          Haga clic aquí para escribir texto.
+
+ VI.                     ANALISIS DE CAUSALIDAD
+
+                                             DISEÑO ESQUEMATICO DEL ARBOL DE CAUSAS
+                                                                    ACCIDENTE DE TRABAJO:
+
+                                                                  Haga clic aquí para escribir texto.
+
+
+                                  CONDICIÓN INSEGURA:                                         ACTO INSEGURO:
+
+
+
+
+        CAUSAS INMEDIATAS
+                                  Haga clic aquí para escribir texto.                         Haga clic aquí para escribir texto.
+
+
+
+
+                                  FACTOR DEL TRABAJO:                                         FACTOR DEL TRABAJADOR:
+
+
+
+
+        CAUSAS BASICAS
+                                  Haga clic aquí para escribir texto.                         Haga clic aquí para escribir texto.
+
+
+
+
+Teniendo en cuenta el resultado del diagrama de árbol causal, se pueden enumerar las causas, según su
+clasificación de la siguiente manera:
+
+                  CAUSAS INMEDIATAS                                                         CAUSAS BASICAS
+            CONDICION                                                               FACTOR DEL          FACTOR DEL
+                             ACTO INSEGURO
+            INSEGURA                                                                 TRABAJO           TRABAJADOR
+ Haga clic aquí para                          Haga clic aquí para             Haga clic aquí para            Haga clic aquí para
+ escribir texto.                              escribir texto.                 escribir texto.                escribir texto.
+ Haga clic aquí para                          Haga clic aquí para             Haga clic aquí para            Haga clic aquí para
+ escribir texto.                              escribir texto.                 escribir texto.                escribir texto.
+
+ VII.                    OBSERVACIONES DEL EQUIPO INVESTIGADOR
+
+Describa las conclusiones y observaciones finales que realiza el equipo investigador frente a la investigación.
+
+Haga clic aquí para escribir texto.
+
+                                         Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                                 Tel: 3213404434
+                                                      E-mail: comfacor2026fase3@gmail.com
+                                  SISTEMA INTEGRADO DE GESTIÓN (CALIDAD Y SST)
+                                                                                               Código: FOR-057
+                                              FORMATO DE INFORME DE
+                                          INVESTIGACIÓN DE ACCIDENTES DE                            Versión: 001
+                                                     TRABAJO
+                                                                                                 Página 5 de 5
+
+       VIII.  MEDIDAS DE CONTROL A IMPLEMENTAR Y PLAN DE ACCIÓN
+      Para prevenir la ocurrencia de futuros incidentes y accidentes de trabajo la empresa se compromete a
+      implementar las siguientes medidas de control:
+
+  TIPO DE                                                    FECHA DE              FECHA DE           RESPONSABLE DE LA
+                    DESCRIPCIÓN DEL CONTROL
+ CONTROL                                                    EJECUCIÓN            VERIFICACIÓN            VERIFICACIÓN
+                                                            Haga clic aquí        Haga clic aquí
+   EN LA                                                                                              Haga clic aquí para
+                  Haga clic aquí para escribir texto.        para escribir       para escribir una
+  FUENTE                                                                                              escribir texto.
+                                                              una fecha.              fecha.
+                                                            Haga clic aquí        Haga clic aquí
+                                                                                                      Haga clic aquí para
+EN EL MEDIO       Haga clic aquí para escribir texto.        para escribir       para escribir una
+                                                                                                      escribir texto.
+                                                              una fecha.              fecha.
+                                                            Haga clic aquí        Haga clic aquí
+                                                                                                      Haga clic aquí para
+ PERSONA          Haga clic aquí para escribir texto.        para escribir       para escribir una
+                                                                                                      escribir texto.
+                                                              una fecha.              fecha.
+
+       IX.     PARTICIPANTES DE LA INVESTIGACIÓN
+
+      Como constancia de lo dispuesto en el presente informe firman:
+
+                                                 EQUIPO INVESTIGADOR
+                     NOMBRE                        IDENTIFICACIÓN                 CARGO                      FIRMA
+                                                   Haga clic aquí para        Haga clic aquí para
+    Haga clic aquí para escribir texto.
+                                                     escribir texto.            escribir texto.
+                                                   Haga clic aquí para        Haga clic aquí para
+    Haga clic aquí para escribir texto.
+                                                     escribir texto.            escribir texto.
+                                                   Haga clic aquí para        Haga clic aquí para
+    Haga clic aquí para escribir texto.
+                                                     escribir texto.            escribir texto.
+                                                   Haga clic aquí para        Haga clic aquí para
+    Haga clic aquí para escribir texto.
+                                                     escribir texto.            escribir texto.
+
+      Gerente General:
+
+                            NOMBRE                                       IDENTIFICACIÓN                     FIRMA
+                                                                         Haga clic aquí para
+Haga clic aquí para escribir texto.
+                                                                           escribir texto.
+
+      Profesional con licencia en Seguridad y Salud en el Trabajo:
+
+                 NOMBRE                        IDENTIFICACIÓN          LICENCIA Nº                            FIRMA
+                                               Haga clic aquí para  Haga clic aquí para
+Haga clic aquí para escribir texto.
+                                                 escribir texto.       escribir texto.
+     Fecha de elaboración del informe: Haga clic aquí para escribir una fecha.
+     Hora: Haga clic aquí para escribir texto.
+                               Dir.: Calle 58 NRO 11 – 28 Br. La Castellana Montería - Córdoba
+                                                       Tel: 3213404434
+                                            E-mail: comfacor2026fase3@gmail.com
+
