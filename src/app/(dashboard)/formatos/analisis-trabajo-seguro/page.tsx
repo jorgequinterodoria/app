@@ -135,13 +135,13 @@ function AnalisisTrabajoSeguroForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Análisis de Trabajo Seguro</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Análisis de Trabajo Seguro</h1>
           <p className="text-sm text-gray-500">FOR-008 - Formato de análisis de trabajo seguro</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -159,131 +159,131 @@ function AnalisisTrabajoSeguroForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <h2 className="font-semibold text-gray-900">Información General</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Actividad</label>
+            <label className="label">Actividad</label>
             <input
               type="text"
               value={actividad}
               onChange={(e) => setActividad(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Análisis</label>
+            <label className="label">Fecha de Análisis</label>
             <input
               type="date"
               value={fechaAnalisis}
               onChange={(e) => setFechaAnalisis(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hora Inicio</label>
+              <label className="label">Hora Inicio</label>
               <input
                 type="time"
                 value={horaInicio}
                 onChange={(e) => setHoraInicio(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hora Fin</label>
+              <label className="label">Hora Fin</label>
               <input
                 type="time"
                 value={horaFin}
                 onChange={(e) => setHoraFin(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Altura</label>
+            <label className="label">Altura</label>
             <input
               type="text"
               value={altura}
               onChange={(e) => setAltura(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Sitio</label>
+            <label className="label">Sitio</label>
             <input
               type="text"
               value={sitio}
               onChange={(e) => setSitio(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Empresa Ejecutante</label>
+            <label className="label">Empresa Ejecutante</label>
             <input
               type="text"
               value={empresaEjecutante}
               onChange={(e) => setEmpresaEjecutante(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <h2 className="font-semibold text-gray-900">Recursos</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Maquinaria</label>
+            <label className="label">Maquinaria</label>
             <input
               type="text"
               value={maquinaria}
               onChange={(e) => setMaquinaria(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Equipos Menores</label>
+            <label className="label">Equipos Menores</label>
             <input
               type="text"
               value={equiposMenores}
               onChange={(e) => setEquiposMenores(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Herramientas</label>
+            <label className="label">Herramientas</label>
             <input
               type="text"
               value={herramientas}
               onChange={(e) => setHerramientas(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Sustancias Químicas</label>
+            <label className="label">Sustancias Químicas</label>
             <input
               type="text"
               value={sustanciasQuimicas}
               onChange={(e) => setSustanciasQuimicas(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-900">Trabajadores</h2>
           <button
             onClick={addTrabajador}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1 rounded-lg text-sm transition-colors"
+            className="btn btn-secondary px-3 py-1"
           >
             + Agregar
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
@@ -305,7 +305,7 @@ function AnalisisTrabajoSeguroForm() {
                       type="text"
                       value={row.cargo}
                       onChange={(e) => updateTrabajador(row.id, "cargo", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -313,13 +313,14 @@ function AnalisisTrabajoSeguroForm() {
                       type="number"
                       value={row.cantidadTrabajadores || ""}
                       onChange={(e) => updateTrabajador(row.id, "cantidadTrabajadores", parseInt(e.target.value) || 0)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm text-center focus:ring-1 focus:ring-blue-500"
+                      className="input text-center"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-gray-200 text-center">
                     {trabajadores.length > 1 && (
                       <button
                         onClick={() => removeTrabajador(row.id)}
+                        aria-label="Eliminar fila"
                         className="text-red-500 hover:text-red-700 text-sm font-medium"
                       >
                         ✕
@@ -333,7 +334,7 @@ function AnalisisTrabajoSeguroForm() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <h2 className="font-semibold text-gray-900">Equipo Contra Incendios</h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
@@ -341,7 +342,7 @@ function AnalisisTrabajoSeguroForm() {
               type="checkbox"
               checked={extintor}
               onChange={(e) => setExtintor(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600"
             />
             Extintor
           </label>
@@ -350,7 +351,7 @@ function AnalisisTrabajoSeguroForm() {
               type="checkbox"
               checked={manguera}
               onChange={(e) => setManguera(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600"
             />
             Manguera
           </label>
@@ -359,7 +360,7 @@ function AnalisisTrabajoSeguroForm() {
               type="checkbox"
               checked={balde}
               onChange={(e) => setBalde(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600"
             />
             Balde
           </label>
@@ -368,25 +369,25 @@ function AnalisisTrabajoSeguroForm() {
               type="checkbox"
               checked={arena}
               onChange={(e) => setArena(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600"
             />
             Arena
           </label>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-900">Análisis de Tareas</h2>
           <button
             onClick={addAnalisis}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1 rounded-lg text-sm transition-colors"
+            className="btn btn-secondary px-3 py-1"
           >
             + Agregar
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
@@ -414,7 +415,7 @@ function AnalisisTrabajoSeguroForm() {
                       type="text"
                       value={row.descripcionTarea}
                       onChange={(e) => updateAnalisis(row.id, "descripcionTarea", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -422,7 +423,7 @@ function AnalisisTrabajoSeguroForm() {
                       type="text"
                       value={row.peligros}
                       onChange={(e) => updateAnalisis(row.id, "peligros", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -430,7 +431,7 @@ function AnalisisTrabajoSeguroForm() {
                       type="text"
                       value={row.consecuencias}
                       onChange={(e) => updateAnalisis(row.id, "consecuencias", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -438,13 +439,14 @@ function AnalisisTrabajoSeguroForm() {
                       type="text"
                       value={row.controles}
                       onChange={(e) => updateAnalisis(row.id, "controles", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-gray-200 text-center">
                     {analisis.length > 1 && (
                       <button
                         onClick={() => removeAnalisis(row.id)}
+                        aria-label="Eliminar fila"
                         className="text-red-500 hover:text-red-700 text-sm font-medium"
                       >
                         ✕

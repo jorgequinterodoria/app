@@ -81,11 +81,11 @@ function PermisoAlturasForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Permiso de Trabajos en Altura</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Permiso de Trabajos en Altura</h1>
           <p className="text-sm text-gray-500">FOR-107</p>
         </div>
         <button onClick={handleSave} disabled={guardando}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors">
+          className="btn btn-primary">
           {guardando ? "Guardando..." : "Guardar"}
         </button>
       </div>
@@ -96,24 +96,24 @@ function PermisoAlturasForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Datos del Permiso</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+            <label className="label">Fecha</label>
             <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Altura (metros)</label>
+            <label className="label">Altura (metros)</label>
             <input type="number" step="0.1" value={altura} onChange={(e) => setAltura(e.target.value)}
               placeholder="Ej: 3.5"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de trabajo</label>
+            <label className="label">Tipo de trabajo</label>
             <select value={tipoTrabajo} onChange={(e) => setTipoTrabajo(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              className="input">
               <option value="">Seleccione...</option>
               <option value="Uso de escalera">Uso de escalera</option>
               <option value="Trabajo sobre andamio">Trabajo sobre andamio</option>
@@ -124,39 +124,39 @@ function PermisoAlturasForm() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Lugar / Ubicación</label>
+            <label className="label">Lugar / Ubicación</label>
             <input type="text" value={lugar} onChange={(e) => setLugar(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Trabajador</label>
+            <label className="label">Trabajador</label>
             <input type="text" value={trabajador} onChange={(e) => setTrabajador(e.target.value)}
               placeholder="Nombre completo"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cédula</label>
+            <label className="label">Cédula</label>
             <input type="text" value={cedula} onChange={(e) => setCedula(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Responsable del permiso</label>
+            <label className="label">Responsable del permiso</label>
             <input type="text" value={responsable} onChange={(e) => setResponsable(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Condiciones seguras identificadas</label>
+          <label className="label">Condiciones seguras identificadas</label>
           <textarea value={condicionesSeguras} onChange={(e) => setCondicionesSeguras(e.target.value)} rows={3}
             placeholder="Describa las condiciones de seguridad identificadas antes de iniciar el trabajo..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            className="input" />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Verificaciones de Seguridad</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500">#</th>
@@ -175,20 +175,20 @@ function PermisoAlturasForm() {
                       <label className="flex items-center gap-1 cursor-pointer">
                         <input type="radio" name={`ca-${check.id}`} checked={check.cumple === "SI"}
                           onChange={() => updateCheck(check.id, "cumple", "SI")}
-                          className="text-blue-600 focus:ring-blue-500" />
+                          className="text-blue-600" />
                         <span className="text-xs">SI</span>
                       </label>
                       <label className="flex items-center gap-1 cursor-pointer">
                         <input type="radio" name={`ca-${check.id}`} checked={check.cumple === "NO"}
                           onChange={() => updateCheck(check.id, "cumple", "NO")}
-                          className="text-red-600 focus:ring-red-500" />
+                          className="text-red-600" />
                         <span className="text-xs">NO</span>
                       </label>
                     </div>
                   </td>
                   <td className="px-3 py-2">
                     <input type="text" value={check.observacion} onChange={(e) => updateCheck(check.id, "observacion", e.target.value)}
-                      placeholder="..." className="border border-gray-300 rounded px-2 py-1 text-xs w-full" />
+                      placeholder="..." className="input" />
                   </td>
                 </tr>
               ))}

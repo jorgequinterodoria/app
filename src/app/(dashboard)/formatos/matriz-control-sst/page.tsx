@@ -133,16 +133,16 @@ function MatrizPeligrosForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Matriz de Control Operativo SST</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Matriz de Control Operativo SST</h1>
           <p className="text-sm text-gray-500">FOR-069</p>
         </div>
         <div className="flex gap-2">
           <button onClick={agregarFila}
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors">
+            className="btn btn-secondary px-3 py-1.5 text-xs">
             + Agregar fila
           </button>
           <button onClick={handleGuardar} disabled={guardando}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors">
+            className="btn btn-primary">
             {guardando ? "Guardando..." : "Guardar"}
           </button>
         </div>
@@ -154,27 +154,27 @@ function MatrizPeligrosForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 flex flex-wrap gap-4">
+      <div className="card p-4 flex flex-wrap gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+          <label className="label">Fecha</label>
           <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+            className="input" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Inspeccionado por</label>
+          <label className="label">Inspeccionado por</label>
           <input type="text" value={inspeccionadoPor} onChange={(e) => setInspeccionadoPor(e.target.value)}
             placeholder="Nombre del inspector"
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+            className="input" />
         </div>
       </div>
 
       {filas.length === 0 ? (
-        <div className="text-center text-gray-500 py-12 bg-white rounded-xl border border-gray-200">
+        <div className="card text-center text-gray-500 py-12">
           No hay registros. Haga clic en &quot;+ Agregar fila&quot; para comenzar.
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white rounded-xl border border-gray-200">
-          <table className="min-w-full text-sm">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 border-b whitespace-nowrap">Proceso</th>
@@ -194,20 +194,20 @@ function MatrizPeligrosForm() {
               {filas.map((fila) => (
                 <tr key={fila.id} className="hover:bg-gray-50">
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.proceso} onChange={(e) => actualizarFila(fila.id, "proceso", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.actividad} onChange={(e) => actualizarFila(fila.id, "actividad", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.peligro} onChange={(e) => actualizarFila(fila.id, "peligro", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.consecuencia} onChange={(e) => actualizarFila(fila.id, "consecuencia", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.personasExpuestas} onChange={(e) => actualizarFila(fila.id, "personasExpuestas", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.controlsExistentes} onChange={(e) => actualizarFila(fila.id, "controlsExistentes", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b text-center">
                     <select value={fila.probabilidad} onChange={(e) => actualizarFila(fila.id, "probabilidad", e.target.value)}
-                      className="border border-gray-200 rounded px-1 py-1 text-xs">
+                      className="input">
                       <option value="">-</option>
                       <option value="Baja">Baja</option>
                       <option value="Media">Media</option>
@@ -216,7 +216,7 @@ function MatrizPeligrosForm() {
                   </td>
                   <td className="px-2 py-1 border-b text-center">
                     <select value={fila.severidad} onChange={(e) => actualizarFila(fila.id, "severidad", e.target.value)}
-                      className="border border-gray-200 rounded px-1 py-1 text-xs">
+                      className="input">
                       <option value="">-</option>
                       <option value="Baja">Baja</option>
                       <option value="Media">Media</option>
@@ -225,13 +225,13 @@ function MatrizPeligrosForm() {
                   </td>
                   <td className="px-2 py-1 border-b text-center">
                     {fila.nivelRiesgo ? (
-                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${riesgoColor[fila.nivelRiesgo]}`}>{fila.nivelRiesgo}</span>
+                      <span className={`badge ${riesgoColor[fila.nivelRiesgo]}`}>{fila.nivelRiesgo}</span>
                     ) : <span className="text-gray-300">-</span>}
                   </td>
                   <td className="px-2 py-1 border-b"><input type="text" value={fila.tratamiento} onChange={(e) => actualizarFila(fila.id, "tratamiento", e.target.value)}
-                    className="w-full border border-gray-200 rounded px-2 py-1 text-xs" /></td>
+                    className="input" /></td>
                   <td className="px-2 py-1 border-b text-center">
-                    <button onClick={() => eliminarFila(fila.id)}
+                    <button onClick={() => eliminarFila(fila.id)} aria-label="Eliminar fila"
                       className="text-red-400 hover:text-red-600 text-lg leading-none">&times;</button>
                   </td>
                 </tr>

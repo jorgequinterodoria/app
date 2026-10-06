@@ -107,9 +107,9 @@ export default function QrAttendancePage() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-full text-center">
+        <div className="card p-6 max-w-sm w-full text-center">
           <div className="text-red-500 text-5xl mb-4">✕</div>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">Error</h1>
+          <h1 className="text-xl font-semibold text-gray-900 mb-2">Error</h1>
           <p className="text-gray-600">{error}</p>
         </div>
       </div>
@@ -119,9 +119,9 @@ export default function QrAttendancePage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-full text-center">
+        <div className="card p-6 max-w-sm w-full text-center">
           <div className="text-green-500 text-5xl mb-4">✓</div>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">
+          <h1 className="text-xl font-semibold text-gray-900 mb-2">
             Asistencia registrada
           </h1>
           <p className="text-gray-600">Tu registro fue exitoso.</p>
@@ -133,8 +133,8 @@ export default function QrAttendancePage() {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
       <div className="max-w-sm mx-auto">
-        <div className="bg-white rounded-2xl shadow-lg p-6">
-          <h1 className="text-xl font-bold text-gray-900 text-center mb-1">
+        <div className="card p-6">
+          <h1 className="text-xl font-semibold text-gray-900 text-center mb-1">
             {data?.proyecto?.nombre || "Registro de Asistencia"}
           </h1>
           <p className="text-sm text-gray-500 text-center mb-6">
@@ -143,13 +143,14 @@ export default function QrAttendancePage() {
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="empleado" className="label">
                 Empleado
               </label>
               <select
+                id="empleado"
                 value={selectedEmpleado}
                 onChange={(e) => setSelectedEmpleado(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input px-4 py-3 text-base"
               >
                 <option value="">Seleccionar empleado</option>
                 {data?.empleados.map((emp) => (
@@ -161,7 +162,7 @@ export default function QrAttendancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="label mb-2">
                 ¿Presenta síntomas?
               </label>
               <div className="flex gap-3">
@@ -191,13 +192,14 @@ export default function QrAttendancePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="novedad" className="label">
                 Novedad (opcional)
               </label>
               <select
+                id="novedad"
                 value={novedad}
                 onChange={(e) => setNovedad(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input px-4 py-3 text-base"
               >
                 <option value="">Sin novedad</option>
                 {NOVEDADES.map((n) => (
@@ -217,7 +219,7 @@ export default function QrAttendancePage() {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 rounded-lg text-base transition-colors"
+              className="btn btn-primary w-full py-3"
             >
               {submitting ? "Registrando..." : "Registrar Asistencia"}
             </button>

@@ -107,44 +107,44 @@ export default function UsuariosPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Usuarios</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Usuarios</h1>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="btn btn-primary"
         >
           Crear Usuario
         </button>
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="hidden md:block card overflow-hidden">
+        <table className="table-base">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rol</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Creado</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Creado</th>
+              <th className="text-right">Acciones</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody>
             {users.map((user) => (
               <tr key={user.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{user.nombre}</td>
-                <td className="px-6 py-4 text-sm text-gray-500">{user.email}</td>
-                <td className="px-6 py-4">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                <td className="font-medium text-gray-900">{user.nombre}</td>
+                <td className="text-gray-500">{user.email}</td>
+                <td>
+                  <span className={`badge ${
                     user.role === "admin" ? "bg-purple-100 text-purple-800" : "bg-gray-100 text-gray-800"
                   }`}>
                     {user.role}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
+                <td className="text-gray-500">
                   {new Date(user.createdAt).toLocaleDateString("es-CO")}
                 </td>
-                <td className="px-6 py-4 text-right text-sm space-x-2">
-                  <button onClick={() => setEditingUser(user)} className="text-blue-600 hover:text-blue-800">Editar</button>
+                <td className="text-right space-x-2">
+                  <button onClick={() => setEditingUser(user)} className="link">Editar</button>
                   <button onClick={() => setResetPasswordUser(user)} className="text-yellow-600 hover:text-yellow-800">Reset Password</button>
                   <button onClick={() => setDeleteUser(user)} className="text-red-600 hover:text-red-800">Eliminar</button>
                 </td>
@@ -157,12 +157,12 @@ export default function UsuariosPage() {
       {/* Mobile cards */}
       <div className="md:hidden space-y-4">
         {users.map((user) => (
-          <div key={user.id} className="bg-white rounded-lg border border-gray-200 p-4">
+          <div key={user.id} className="card p-4">
             <div className="flex items-start justify-between">
               <div>
                 <p className="font-medium text-gray-900">{user.nombre}</p>
                 <p className="text-sm text-gray-500">{user.email}</p>
-                <span className={`inline-flex mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ${
+                <span className={`badge mt-1 ${
                   user.role === "admin" ? "bg-purple-100 text-purple-800" : "bg-gray-100 text-gray-800"
                 }`}>
                   {user.role}
@@ -173,7 +173,7 @@ export default function UsuariosPage() {
               </div>
             </div>
             <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
-              <button onClick={() => setEditingUser(user)} className="text-sm text-blue-600 hover:text-blue-800">Editar</button>
+              <button onClick={() => setEditingUser(user)} className="link text-sm">Editar</button>
               <button onClick={() => setResetPasswordUser(user)} className="text-sm text-yellow-600 hover:text-yellow-800">Reset Password</button>
               <button onClick={() => setDeleteUser(user)} className="text-sm text-red-600 hover:text-red-800">Eliminar</button>
             </div>
@@ -206,8 +206,8 @@ export default function UsuariosPage() {
               ¿Estás seguro de eliminar a <strong>{deleteUser.nombre}</strong>?
             </p>
             <div className="flex justify-end gap-3">
-              <button onClick={() => setDeleteUser(null)} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Cancelar</button>
-              <button onClick={handleDelete} className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-lg">Eliminar</button>
+              <button onClick={() => setDeleteUser(null)} className="btn btn-secondary">Cancelar</button>
+              <button onClick={handleDelete} className="btn btn-danger">Eliminar</button>
             </div>
           </div>
         </div>
@@ -244,29 +244,29 @@ function UserFormModal({
         <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+            <label className="label">Nombre</label>
+            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+            <label className="label">Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Rol</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+            <label className="label">Rol</label>
+            <select value={role} onChange={(e) => setRole(e.target.value)} className="input">
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
           </div>
           {!initial && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+              <label className="label">Contraseña</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input" />
             </div>
           )}
           <div className="flex justify-end gap-3 pt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Cancelar</button>
-            <button type="submit" className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Guardar</button>
+            <button type="button" onClick={onClose} className="btn btn-secondary">Cancelar</button>
+            <button type="submit" className="btn btn-primary">Guardar</button>
           </div>
         </form>
       </div>
@@ -295,12 +295,12 @@ function ResetPasswordModal({
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Reset Password</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nueva Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
+            <label className="label">Nueva Contraseña</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input" />
           </div>
           <div className="flex justify-end gap-3">
-            <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Cancelar</button>
-            <button type="submit" className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Actualizar</button>
+            <button type="button" onClick={onClose} className="btn btn-secondary">Cancelar</button>
+            <button type="submit" className="btn btn-primary">Actualizar</button>
           </div>
         </form>
       </div>

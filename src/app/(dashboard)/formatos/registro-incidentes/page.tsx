@@ -104,20 +104,20 @@ function RegistroIncidentesForm() {
     <div className="space-y-4 p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Registro de Casos de Incidentes y Accidentes</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Registro de Casos de Incidentes y Accidentes</h1>
           <p className="text-sm text-gray-500">FOR-056</p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={addRow}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+            className="btn btn-secondary"
           >
             + Fila
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+            className="btn btn-primary"
           >
             {saving ? "Guardando..." : "Guardar"}
           </button>
@@ -136,8 +136,8 @@ function RegistroIncidentesForm() {
         </div>
       )}
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-200 rounded-lg text-sm">
+      <div className="overflow-x-auto rounded-lg border border-gray-200">
+        <table className="table-base">
           <thead>
             <tr className="bg-gray-50">
               {[
@@ -196,7 +196,7 @@ function RegistroIncidentesForm() {
                       type={field === "fecha" ? "date" : "text"}
                       value={row[field]}
                       onChange={(e) => updateRow(row.id, field, e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                 ))}
@@ -204,6 +204,7 @@ function RegistroIncidentesForm() {
                   {rows.length > 1 && (
                     <button
                       onClick={() => removeRow(row.id)}
+                      aria-label="Eliminar fila"
                       className="text-red-500 hover:text-red-700 text-sm font-bold"
                     >
                       ×

@@ -74,13 +74,13 @@ function ReporteIncidentesForm() {
     <div className="space-y-4 p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Reporte Interno de Incidentes/Accidentes</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Reporte Interno de Incidentes/Accidentes</h1>
           <p className="text-sm text-gray-500">FOR-055</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -98,148 +98,148 @@ function ReporteIncidentesForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+            <label className="label">Tipo</label>
             <select
               value={tipo}
               onChange={(e) => setTipo(e.target.value as "incidente" | "accidente")}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             >
               <option value="incidente">Incidente</option>
               <option value="accidente">Accidente</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+            <label className="label">Fecha</label>
             <input
               type="date"
               value={fecha}
               onChange={(e) => setFecha(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Hora</label>
+            <label className="label">Hora</label>
             <input
               type="time"
               value={hora}
               onChange={(e) => setHora(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Lugar</label>
+            <label className="label">Lugar</label>
             <input
               type="text"
               value={lugar}
               onChange={(e) => setLugar(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+          <label className="label">Descripción</label>
           <textarea
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             rows={3}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="input"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Personas Involucradas</label>
+            <label className="label">Personas Involucradas</label>
             <textarea
               value={personasInvolucradas}
               onChange={(e) => setPersonasInvolucradas(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Testigos</label>
+            <label className="label">Testigos</label>
             <textarea
               value={testigos}
               onChange={(e) => setTestigos(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Daños</label>
+            <label className="label">Daños</label>
             <textarea
               value={danos}
               onChange={(e) => setDanos(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Consecuencias</label>
+            <label className="label">Consecuencias</label>
             <textarea
               value={consecuencias}
               onChange={(e) => setConsecuencias(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Causa Inmediata</label>
+            <label className="label">Causa Inmediata</label>
             <textarea
               value={causaInmediata}
               onChange={(e) => setCausaInmediata(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Causa Raíz</label>
+            <label className="label">Causa Raíz</label>
             <textarea
               value={causaRaiz}
               onChange={(e) => setCausaRaiz(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Acciones Correctivas</label>
+          <label className="label">Acciones Correctivas</label>
           <textarea
             value={accionesCorrectivas}
             onChange={(e) => setAccionesCorrectivas(e.target.value)}
             rows={3}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="input"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Responsable</label>
+            <label className="label">Responsable</label>
             <input
               type="text"
               value={responsable}
               onChange={(e) => setResponsable(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha Cierre</label>
+            <label className="label">Fecha Cierre</label>
             <input
               type="date"
               value={fechaCierre}
               onChange={(e) => setFechaCierre(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>

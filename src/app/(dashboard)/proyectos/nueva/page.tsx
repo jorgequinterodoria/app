@@ -77,7 +77,7 @@ function NuevoProyectoContent() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Nuevo Proyecto</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Nuevo Proyecto</h1>
         <Link
           href={empresaId ? `/proyectos?empresa=${empresaId}` : "/proyectos"}
           className="text-sm text-gray-500 hover:text-gray-700"
@@ -94,14 +94,14 @@ function NuevoProyectoContent() {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Empresa *
           </label>
           <select
             required
             value={empresaId}
             onChange={(e) => setEmpresaId(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="input"
           >
             <option value="">Seleccionar empresa...</option>
             {empresas.map((e) => (
@@ -111,7 +111,7 @@ function NuevoProyectoContent() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Nombre *
           </label>
           <input
@@ -119,19 +119,19 @@ function NuevoProyectoContent() {
             required
             value={form.nombre}
             onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="input"
             placeholder="Nombre del proyecto"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Descripción
           </label>
           <textarea
             value={form.descripcion}
             onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="input"
             rows={3}
             placeholder="Descripción del proyecto"
           />
@@ -139,81 +139,81 @@ function NuevoProyectoContent() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Contratante
             </label>
             <input
               type="text"
               value={form.contratante}
               onChange={(e) => setForm({ ...form, contratante: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Ejecutor
             </label>
             <input
               type="text"
               value={form.ejecutor}
               onChange={(e) => setForm({ ...form, ejecutor: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Contrato
             </label>
             <input
               type="text"
               value={form.contrato}
               onChange={(e) => setForm({ ...form, contrato: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Tipo de Contrato
             </label>
             <input
               type="text"
               value={form.tipoContrato}
               onChange={(e) => setForm({ ...form, tipoContrato: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Proyecto
           </label>
           <input
             type="text"
             value={form.proyecto}
             onChange={(e) => setForm({ ...form, proyecto: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="input"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Alcance
           </label>
           <textarea
             value={form.alcance}
             onChange={(e) => setForm({ ...form, alcance: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="input"
             rows={3}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Fecha Inicio *
             </label>
             <input
@@ -221,11 +221,11 @@ function NuevoProyectoContent() {
               required
               value={form.fechaInicio}
               onChange={(e) => setForm({ ...form, fechaInicio: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Fecha Fin *
             </label>
             <input
@@ -233,7 +233,7 @@ function NuevoProyectoContent() {
               required
               value={form.fechaFin}
               onChange={(e) => setForm({ ...form, fechaFin: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="input"
             />
           </div>
         </div>
@@ -241,7 +241,7 @@ function NuevoProyectoContent() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn btn-primary w-full py-2.5"
         >
           {loading ? "Creando..." : "Crear Proyecto"}
         </button>

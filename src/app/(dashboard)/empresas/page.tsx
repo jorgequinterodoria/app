@@ -28,10 +28,10 @@ export default function EmpresasPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Empresas</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Empresas</h1>
         <Link
           href="/empresas/nueva"
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+          className="btn btn-primary"
         >
           + Nueva
         </Link>
@@ -39,7 +39,7 @@ export default function EmpresasPage() {
 
       {loading ? (
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="mt-2 text-gray-500 text-sm">Cargando...</p>
         </div>
       ) : empresas.length === 0 ? (
@@ -47,7 +47,7 @@ export default function EmpresasPage() {
           <p className="text-gray-500">No hay empresas registradas.</p>
           <Link
             href="/empresas/nueva"
-            className="mt-4 inline-block text-blue-600 font-medium hover:underline"
+            className="mt-4 inline-block link"
           >
             Crear la primera empresa
           </Link>
@@ -57,13 +57,13 @@ export default function EmpresasPage() {
           {empresas.map((empresa) => (
             <div
               key={empresa.id}
-              className="block rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+              className="card block p-5"
             >
               <Link
                 href={`/proyectos?empresa=${empresa.id}`}
                 className="block"
               >
-                <h2 className="text-lg font-semibold text-gray-900 truncate hover:text-blue-600">
+                <h2 className="text-lg font-semibold text-gray-900 truncate hover:text-primary">
                   {empresa.nombre}
                 </h2>
                 <p className="mt-1 text-sm text-gray-500 truncate">
@@ -76,7 +76,7 @@ export default function EmpresasPage() {
               <div className="mt-4 flex items-center justify-between">
                 <Link
                   href={`/proyectos?empresa=${empresa.id}`}
-                  className="text-xs font-medium text-blue-600 hover:underline"
+                  className="link text-xs"
                 >
                   Ver proyectos →
                 </Link>

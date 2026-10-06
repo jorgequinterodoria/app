@@ -4,12 +4,23 @@ import { verifyToken } from "@/lib/auth";
 
 const publicPaths = ["/login", "/register"];
 
+// Flujo de asistencia QR: empleados sin cuenta firman desde el celular.
+// Solo son públicos el lookup por token (UUID) y el registro; generate sigue protegido.
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isPublicQrApi(pathname: string) {
+  if (pathname === "/api/qr/register") return true;
+  const match = pathname.match(/^\/api\/qr\/([^/]+)$/);
+  return match !== null && UUID_RE.test(match[1]);
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/qr") ||
+    isPublicQrApi(pathname) ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     publicPaths.includes(pathname)

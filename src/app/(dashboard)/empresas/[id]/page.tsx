@@ -80,22 +80,22 @@ export default function EmpresaDetailPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Editar Empresa</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Editar Empresa</h1>
         <button
           onClick={handleDelete}
-          className="rounded-lg border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+          className="btn btn-danger-outline"
         >
           Eliminar
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <form onSubmit={handleSubmit} className="space-y-4 card p-6">
         <Field name="nombre" label="Nombre" defaultValue={empresa.nombre} required />
         <Field name="nit" label="NIT" defaultValue={empresa.nit} required />
         <Field name="responsable" label="Responsable" defaultValue={empresa.responsable} required />
         <Field name="emailResponsable" label="Email Responsable" defaultValue={empresa.emailResponsable} type="email" required />
         <div>
-          <label htmlFor="logo" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="logo" className="label">
             Logo
           </label>
           <input
@@ -103,7 +103,7 @@ export default function EmpresaDetailPage() {
             name="logo"
             type="file"
             accept="image/*"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+            className="input"
           />
           {empresa.logo && (
             <p className="mt-1 text-xs text-gray-500">Archivo actual: {empresa.logo}</p>
@@ -116,14 +116,14 @@ export default function EmpresaDetailPage() {
           <button
             type="submit"
             disabled={saving}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="btn btn-primary py-2.5"
           >
             {saving ? "Guardando..." : "Guardar cambios"}
           </button>
           <button
             type="button"
             onClick={() => router.back()}
-            className="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            className="btn btn-secondary py-2.5"
           >
             Cancelar
           </button>
@@ -148,7 +148,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={name} className="label">
         {label}
       </label>
       <input
@@ -157,7 +157,7 @@ function Field({
         type={type || "text"}
         defaultValue={defaultValue}
         required={required}
-        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+        className="input"
       />
     </div>
   );

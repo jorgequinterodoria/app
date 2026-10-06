@@ -78,11 +78,11 @@ function EncuestaPreexistenciasForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Encuesta de Enfermedades Preexistentes</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Encuesta de Enfermedades Preexistentes</h1>
           <p className="text-sm text-gray-500">FOR-080</p>
         </div>
         <button onClick={handleSave} disabled={guardando}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors">
+          className="btn btn-primary">
           {guardando ? "Guardando..." : "Guardar"}
         </button>
       </div>
@@ -93,34 +93,34 @@ function EncuestaPreexistenciasForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Datos Personales</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+            <label className="label">Nombre completo</label>
             <input type="text" value={form.nombre} onChange={(e) => update("nombre", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Identificación</label>
+            <label className="label">Identificación</label>
             <input type="text" value={form.identificacion} onChange={(e) => update("identificacion", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+            <label className="label">Cargo</label>
             <input type="text" value={form.cargo} onChange={(e) => update("cargo", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Antigüedad en la empresa</label>
+            <label className="label">Antigüedad en la empresa</label>
             <input type="text" value={form.antiguedad} onChange={(e) => update("antiguedad", e.target.value)}
               placeholder="Ej: 2 años, 6 meses"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Antecedentes Médicos</h2>
         <p className="text-sm text-gray-500">Indique si padece alguna de las siguientes condiciones:</p>
         <div className="space-y-3">
@@ -141,7 +141,7 @@ function EncuestaPreexistenciasForm() {
                     <input type="radio" name={key} value={opt}
                       checked={form[key as keyof EnfermedadPreexistente] === opt}
                       onChange={() => update(key as keyof EnfermedadPreexistente, opt)}
-                      className="text-blue-600 focus:ring-blue-500" />
+                      className="text-blue-600" />
                     <span className="text-sm text-gray-600">{opt}</span>
                   </label>
                 ))}
@@ -150,44 +150,44 @@ function EncuestaPreexistenciasForm() {
           ))}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Otras enfermedades (especificar)</label>
+          <label className="label">Otras enfermedades (especificar)</label>
           <textarea value={form.otras_enfermedades} onChange={(e) => update("otras_enfermedades", e.target.value)} rows={2}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            className="input" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Medicamentos que toma actualmente</label>
+          <label className="label">Medicamentos que toma actualmente</label>
           <textarea value={form.medications} onChange={(e) => update("medications", e.target.value)} rows={2}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+            className="input" />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Aptitud Laboral</h2>
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">¿Tiene miedo de trabajar en altura?</label>
+            <label className="label mb-2">¿Tiene miedo de trabajar en altura?</label>
             <div className="flex gap-4">
               {(["SI", "NO"] as const).map((opt) => (
                 <label key={opt} className="flex items-center gap-2 text-sm text-gray-700">
                   <input type="radio" name="tratamiedo" value={opt}
                     checked={form.tratamiedo === opt}
                     onChange={() => update("tratamiedo", opt)}
-                    className="text-blue-600 focus:ring-blue-500" />
+                    className="text-blue-600" />
                   {opt}
                 </label>
               ))}
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">¿Tiene restricciones para algunas actividades laborales?</label>
+            <label className="label">¿Tiene restricciones para algunas actividades laborales?</label>
             <textarea value={form.restriccionesActividades} onChange={(e) => update("restriccionesActividades", e.target.value)} rows={2}
               placeholder="Describa las restricciones..."
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Observaciones generales</label>
+            <label className="label">Observaciones generales</label>
             <textarea value={form.observaciones} onChange={(e) => update("observaciones", e.target.value)} rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              className="input" />
           </div>
         </div>
       </div>

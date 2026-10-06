@@ -14,7 +14,7 @@ interface Props {
 
 const claseTab = (activo: boolean) =>
   `px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-    activo ? "border-blue-600 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700"
+    activo ? "border-primary text-primary" : "border-transparent text-gray-500 hover:text-gray-700"
   }`;
 
 function VistaDiligenciar({ entrada, proyectoId }: { entrada: NonNullable<ReturnType<typeof getEntrada>>; proyectoId: string }) {

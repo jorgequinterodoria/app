@@ -108,13 +108,13 @@ function SeguimientoSaludEspecialForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Seguimiento de Casos de Salud Especial</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Seguimiento de Casos de Salud Especial</h1>
           <p className="text-sm text-gray-500">FOR-025</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -133,86 +133,86 @@ function SeguimientoSaludEspecialForm() {
       )}
 
       {/* Datos del trabajador */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Datos del Trabajador</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <label className="label">Nombre</label>
             <input
               type="text"
               value={form.nombre}
               onChange={(e) => update("nombre", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+            <label className="label">Apellido</label>
             <input
               type="text"
               value={form.apellido}
               onChange={(e) => update("apellido", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cédula</label>
+            <label className="label">Cédula</label>
             <input
               type="text"
               value={form.cedula}
               onChange={(e) => update("cedula", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+            <label className="label">Cargo</label>
             <input
               type="text"
               value={form.cargo}
               onChange={(e) => update("cargo", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Área</label>
+            <label className="label">Área</label>
             <input
               type="text"
               value={form.area}
               onChange={(e) => update("area", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">ARL</label>
+            <label className="label">ARL</label>
             <input
               type="text"
               value={form.arl}
               onChange={(e) => update("arl", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">EPS</label>
+            <label className="label">EPS</label>
             <input
               type="text"
               value={form.eps}
               onChange={(e) => update("eps", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">AFP</label>
+            <label className="label">AFP</label>
             <input
               type="text"
               value={form.afp}
               onChange={(e) => update("afp", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
       {/* Tipo de caso */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Tipo de Caso</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
@@ -230,7 +230,7 @@ function SeguimientoSaludEspecialForm() {
                 type="checkbox"
                 checked={form[key as keyof Formulario] as boolean}
                 onChange={(e) => update(key as keyof Formulario, e.target.checked as never)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-gray-300 text-blue-600"
               />
               {label}
             </label>
@@ -239,45 +239,45 @@ function SeguimientoSaludEspecialForm() {
       </div>
 
       {/* Diagnósticos */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Diagnósticos</h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico principal</label>
+            <label className="label">Diagnóstico principal</label>
             <input
               type="text"
               value={form.diagnosticoPrincipal}
               onChange={(e) => update("diagnosticoPrincipal", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico relacionado 1</label>
+            <label className="label">Diagnóstico relacionado 1</label>
             <input
               type="text"
               value={form.diagnosticoRelacionado1}
               onChange={(e) => update("diagnosticoRelacionado1", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico relacionado 2</label>
+            <label className="label">Diagnóstico relacionado 2</label>
             <input
               type="text"
               value={form.diagnosticoRelacionado2}
               onChange={(e) => update("diagnosticoRelacionado2", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
       {/* Seguimiento */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Seguimiento</h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">¿Incapacitado?</label>
+            <label className="label mb-2">¿Incapacitado?</label>
             <div className="flex gap-4">
               {(["SI", "NO"] as const).map((opt) => (
                 <label key={opt} className="flex items-center gap-2 text-sm text-gray-700">
@@ -287,7 +287,7 @@ function SeguimientoSaludEspecialForm() {
                     value={opt}
                     checked={form.incapacitado === opt}
                     onChange={() => update("incapacitado", opt)}
-                    className="text-blue-600 focus:ring-blue-500"
+                    className="text-blue-600"
                   />
                   {opt}
                 </label>
@@ -295,49 +295,49 @@ function SeguimientoSaludEspecialForm() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Período de incapacidad</label>
+            <label className="label">Período de incapacidad</label>
             <input
               type="text"
               placeholder="Ej: 01/01/2026 - 15/01/2026"
               value={form.periodoIncapacidad}
               onChange={(e) => update("periodoIncapacidad", e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Citas médicas</label>
+            <label className="label">Citas médicas</label>
             <textarea
               value={form.citasMedicas}
               onChange={(e) => update("citasMedicas", e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cumplimiento del tratamiento</label>
+            <label className="label">Cumplimiento del tratamiento</label>
             <textarea
               value={form.cumplimientoTratamiento}
               onChange={(e) => update("cumplimientoTratamiento", e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Restricciones</label>
+            <label className="label">Restricciones</label>
             <textarea
               value={form.restricciones}
               onChange={(e) => update("restricciones", e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Reintegro laboral</label>
+            <label className="label">Reintegro laboral</label>
             <textarea
               value={form.reintegroLaboral}
               onChange={(e) => update("reintegroLaboral", e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>

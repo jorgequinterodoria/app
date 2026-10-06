@@ -110,13 +110,13 @@ function RegistroEnfermedadLaboralForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Registro de Casos de Enfermedad Laboral</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Registro de Casos de Enfermedad Laboral</h1>
           <p className="text-sm text-gray-500">FOR-024</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -134,18 +134,18 @@ function RegistroEnfermedadLaboralForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">Registro de Enfermedad Laboral</h2>
           <button
             onClick={() => setFilas((prev) => [...prev, createEmptyRow()])}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1.5 rounded-lg text-xs transition-colors"
+            className="btn btn-secondary px-3 py-1.5 text-xs"
           >
             + Agregar fila
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg text-xs">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base text-xs">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-2 py-2 text-left font-medium text-gray-500 border-b border-r border-gray-200">N°</th>
@@ -175,71 +175,71 @@ function RegistroEnfermedadLaboralForm() {
               {filas.map((fila) => (
                 <tr key={fila.id} className="hover:bg-gray-50">
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.numero} onChange={(e) => updateRow(fila.id, "numero", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.numero} onChange={(e) => updateRow(fila.id, "numero", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="date" value={fila.fechaDiagnosticoEps} onChange={(e) => updateRow(fila.id, "fechaDiagnosticoEps", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="date" value={fila.fechaDiagnosticoEps} onChange={(e) => updateRow(fila.id, "fechaDiagnosticoEps", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="date" value={fila.fechaDiagnosticoArl} onChange={(e) => updateRow(fila.id, "fechaDiagnosticoArl", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="date" value={fila.fechaDiagnosticoArl} onChange={(e) => updateRow(fila.id, "fechaDiagnosticoArl", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.nombreTrabajador} onChange={(e) => updateRow(fila.id, "nombreTrabajador", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.nombreTrabajador} onChange={(e) => updateRow(fila.id, "nombreTrabajador", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.identificacion} onChange={(e) => updateRow(fila.id, "identificacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.identificacion} onChange={(e) => updateRow(fila.id, "identificacion", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.cargo} onChange={(e) => updateRow(fila.id, "cargo", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.cargo} onChange={(e) => updateRow(fila.id, "cargo", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.tipoVinculacion} onChange={(e) => updateRow(fila.id, "tipoVinculacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tipoVinculacion} onChange={(e) => updateRow(fila.id, "tipoVinculacion", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.ocupacionHabitual} onChange={(e) => updateRow(fila.id, "ocupacionHabitual", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.ocupacionHabitual} onChange={(e) => updateRow(fila.id, "ocupacionHabitual", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.tiempoOcupacion} onChange={(e) => updateRow(fila.id, "tiempoOcupacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tiempoOcupacion} onChange={(e) => updateRow(fila.id, "tiempoOcupacion", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.jornada} onChange={(e) => updateRow(fila.id, "jornada", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.jornada} onChange={(e) => updateRow(fila.id, "jornada", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.antecedentesOcupacionales} onChange={(e) => updateRow(fila.id, "antecedentesOcupacionales", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.antecedentesOcupacionales} onChange={(e) => updateRow(fila.id, "antecedentesOcupacionales", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.diagnosticoEl} onChange={(e) => updateRow(fila.id, "diagnosticoEl", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.diagnosticoEl} onChange={(e) => updateRow(fila.id, "diagnosticoEl", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.consecuencia} onChange={(e) => updateRow(fila.id, "consecuencia", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.consecuencia} onChange={(e) => updateRow(fila.id, "consecuencia", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" value={fila.diasIncapacidad} onChange={(e) => updateRow(fila.id, "diasIncapacidad", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={fila.diasIncapacidad} onChange={(e) => updateRow(fila.id, "diasIncapacidad", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" value={fila.diasPerdidos} onChange={(e) => updateRow(fila.id, "diasPerdidos", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={fila.diasPerdidos} onChange={(e) => updateRow(fila.id, "diasPerdidos", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" value={fila.diasRestricciones} onChange={(e) => updateRow(fila.id, "diasRestricciones", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={fila.diasRestricciones} onChange={(e) => updateRow(fila.id, "diasRestricciones", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" value={fila.diasTratamiento} onChange={(e) => updateRow(fila.id, "diasTratamiento", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={fila.diasTratamiento} onChange={(e) => updateRow(fila.id, "diasTratamiento", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <select value={fila.rehabilitacion} onChange={(e) => updateRow(fila.id, "rehabilitacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.rehabilitacion} onChange={(e) => updateRow(fila.id, "rehabilitacion", e.target.value)} className="input text-xs">
                       <option value="">-</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" step="0.01" value={fila.costosDirectos} onChange={(e) => updateRow(fila.id, "costosDirectos", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" step="0.01" value={fila.costosDirectos} onChange={(e) => updateRow(fila.id, "costosDirectos", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" step="0.01" value={fila.costosIndirectos} onChange={(e) => updateRow(fila.id, "costosIndirectos", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" step="0.01" value={fila.costosIndirectos} onChange={(e) => updateRow(fila.id, "costosIndirectos", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-gray-200">
-                    <input type="number" step="0.01" value={fila.costosTotales} onChange={(e) => updateRow(fila.id, "costosTotales", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" step="0.01" value={fila.costosTotales} onChange={(e) => updateRow(fila.id, "costosTotales", e.target.value)} className="input text-xs" />
                   </td>
                 </tr>
               ))}

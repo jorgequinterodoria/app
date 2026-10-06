@@ -67,9 +67,9 @@ function ProyectosContent() {
   if (!empresaId && empresas.length > 0 && !selectedEmpresa) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Proyectos</h1>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <h1 className="text-xl font-semibold text-gray-900">Proyectos</h1>
+        <div className="card p-6">
+          <label className="label mb-2">
             Selecciona una empresa para ver sus proyectos
           </label>
           <select
@@ -78,7 +78,7 @@ function ProyectosContent() {
               setSelectedEmpresa(e.target.value);
               window.history.replaceState(null, "", `/proyectos?empresa=${e.target.value}`);
             }}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm"
+            className="input"
           >
             <option value="">Seleccionar empresa...</option>
             {empresas.map((e) => (
@@ -93,7 +93,7 @@ function ProyectosContent() {
   if (error) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Proyectos</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Proyectos</h1>
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
           {error}
         </div>
@@ -104,10 +104,10 @@ function ProyectosContent() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Proyectos</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Proyectos</h1>
         <Link
           href={`/proyectos/nueva?empresa=${selectedEmpresa}`}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+          className="btn btn-primary"
         >
           + Nuevo Proyecto
         </Link>
@@ -118,7 +118,7 @@ function ProyectosContent() {
           <p className="text-gray-500">No hay proyectos registrados.</p>
           <Link
             href={`/proyectos/nueva?empresa=${selectedEmpresa}`}
-            className="mt-4 inline-block text-blue-600 font-medium hover:underline"
+            className="mt-4 inline-block link"
           >
             Crear el primer proyecto
           </Link>
@@ -129,14 +129,14 @@ function ProyectosContent() {
             <Link
               key={proyecto.id}
               href={`/proyectos/${proyecto.id}`}
-              className="block rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+              className="card block p-5 transition-shadow hover:shadow-md"
             >
               <div className="flex items-start justify-between">
                 <h2 className="text-lg font-semibold text-gray-900 truncate">
                   {proyecto.nombre}
                 </h2>
                 <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  className={`badge ${
                     proyecto.estado === "activa"
                       ? "bg-green-100 text-green-800"
                       : proyecto.estado === "finalizada"
@@ -164,7 +164,7 @@ function ProyectosContent() {
                 </p>
               </div>
               <div className="mt-4">
-                <span className="text-xs font-medium text-blue-600 hover:underline">
+                <span className="link text-xs">
                   Ver detalles →
                 </span>
               </div>

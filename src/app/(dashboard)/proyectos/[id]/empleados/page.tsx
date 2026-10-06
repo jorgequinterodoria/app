@@ -79,9 +79,9 @@ export default function EmpleadosPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Empleados</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Empleados</h1>
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="mt-2 text-gray-500">Cargando...</p>
         </div>
       </div>
@@ -98,14 +98,14 @@ export default function EmpleadosPage() {
           >
             ← Volver a proyecto
           </Link>
-          <h1 className="mt-2 text-2xl font-bold text-gray-900">
+          <h1 className="mt-2 text-xl font-semibold text-gray-900">
             Empleados ({empleados.length})
           </h1>
         </div>
       </div>
 
       {/* Sección de carga */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="card p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Subir archivo Excel
         </h2>
@@ -130,12 +130,12 @@ export default function EmpleadosPage() {
             ref={fileInputRef}
             type="file"
             accept=".xlsx,.xls,.csv"
-            className="flex-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="input flex-1 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn btn-primary"
           >
             {uploading ? "Subiendo..." : "Subir"}
           </button>
@@ -143,7 +143,7 @@ export default function EmpleadosPage() {
       </div>
 
       {/* Lista de empleados */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="card p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Empleados registrados
         </h2>
@@ -187,48 +187,48 @@ export default function EmpleadosPage() {
 
             {/* Vista escritorio: tabla */}
             <div className="hidden sm:block overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="table-base">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       Nombre
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       Identificación
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       Cargo
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       Tipo Vínculo
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       EPS
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th>
                       ARL
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {empleados.map((empleado) => (
                     <tr key={empleado.id}>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                      <td className="font-medium text-gray-900">
                         {empleado.nombre}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="text-gray-500">
                         {empleado.identificacion}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="text-gray-500">
                         {empleado.cargo}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="text-gray-500">
                         {empleado.tipoVinculacion}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="text-gray-500">
                         {empleado.eps || "-"}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="text-gray-500">
                         {empleado.arl || "-"}
                       </td>
                     </tr>

@@ -147,21 +147,21 @@ function AsistenciaDiariaForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Asistencia Diaria</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Asistencia Diaria</h1>
           <p className="text-sm text-gray-500">FOR-006 - Registro de asistencia diaria del personal en obra</p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+            className="btn btn-primary"
           >
             {saving ? "Guardando..." : "Guardar"}
           </button>
           <button
             onClick={handleGenerateQr}
             disabled={generatingQr}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+            className="btn bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white"
           >
             {generatingQr ? "Generando..." : "Generar QR"}
           </button>
@@ -181,13 +181,13 @@ function AsistenciaDiariaForm() {
       )}
 
       {qrImage && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col items-center gap-4">
+        <div className="card p-6 flex flex-col items-center gap-4">
           <h2 className="font-semibold text-gray-900">QR de Asistencia</h2>
           <Image src={qrImage} alt="QR Code" width={220} height={220} className="rounded-lg" unoptimized />
           <p className="text-xs text-gray-500 break-all text-center max-w-xs">{qrUrl}</p>
           <button
             onClick={handleDownloadQr}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+            className="btn btn-secondary"
           >
             Descargar QR
           </button>
@@ -196,37 +196,37 @@ function AsistenciaDiariaForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Frente de Obra</label>
+          <label className="label">Frente de Obra</label>
           <input
             type="text"
             value={frenteObra}
             onChange={(e) => setFrenteObra(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Fecha Inicio</label>
+          <label className="label">Fecha Inicio</label>
           <input
             type="date"
             value={fechaInicio}
             onChange={(e) => setFechaInicio(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Fecha Fin</label>
+          <label className="label">Fecha Fin</label>
           <input
             type="date"
             value={fechaFin}
             onChange={(e) => setFechaFin(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="input"
           />
         </div>
       </div>
 
       {empleados.length > 0 && days.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-[180px]">
@@ -252,7 +252,7 @@ function AsistenciaDiariaForm() {
                         <select
                           value={asistencia[emp.id]?.[dayIndex]?.sintomas || ""}
                           onChange={(e) => updateCell(emp.id, dayIndex, "sintomas", e.target.value)}
-                          className="border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500"
+                          className="input"
                         >
                           <option value="">-</option>
                           <option value="SI">SI</option>
@@ -263,7 +263,7 @@ function AsistenciaDiariaForm() {
                           placeholder="Novedad"
                           value={asistencia[emp.id]?.[dayIndex]?.novedad || ""}
                           onChange={(e) => updateCell(emp.id, dayIndex, "novedad", e.target.value)}
-                          className="border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500"
+                          className="input"
                         />
                       </div>
                     </td>

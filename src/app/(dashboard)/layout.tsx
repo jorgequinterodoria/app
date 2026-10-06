@@ -81,7 +81,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 href={item.href}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-blue-50 text-blue-700"
+                    ? "bg-primary-subtle text-primary"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
@@ -112,7 +112,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={item.href}
                 href={item.href}
                 className={`flex flex-col items-center gap-1 px-3 py-1 text-xs font-medium ${
-                  isActive ? "text-blue-700" : "text-gray-500"
+                  isActive ? "text-primary" : "text-gray-500"
                 }`}
               >
                 <item.icon className="h-6 w-6" />

@@ -11,9 +11,7 @@ interface Props {
   proyectoId: string;
 }
 
-const claseInput =
-  "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
-const claseInputCelda = "w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500";
+const claseInput = "input"; // campos de panel y celdas de tabla comparten .input
 
 function filasIniciales(seccion: SeccionConfig): TablasState {
   const out: TablasState = {};
@@ -29,7 +27,7 @@ function Campo({ campo, value, onChange }: { campo: CampoConfig; value: string; 
   const id = `campo-${campo.id}`;
   return (
     <div className={campo.tipo === "area" ? "sm:col-span-2" : ""}>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={id} className="label">
         {campo.etiqueta}
       </label>
       {campo.tipo === "area" ? (
@@ -78,7 +76,7 @@ function Celda({
   if (tipo === "seleccion" || tipo === "si-no") {
     const opts = tipo === "si-no" ? ["SI", "NO"] : (opciones ?? []);
     return (
-      <select value={value} onChange={(e) => onChange(e.target.value)} className={claseInputCelda}>
+      <select value={value} onChange={(e) => onChange(e.target.value)} className={claseInput}>
         <option value="">-</option>
         {opts.map((o) => (
           <option key={o} value={o}>
@@ -89,14 +87,14 @@ function Celda({
     );
   }
   if (tipo === "area") {
-    return <textarea rows={2} value={value} onChange={(e) => onChange(e.target.value)} className={claseInputCelda} />;
+    return <textarea rows={2} value={value} onChange={(e) => onChange(e.target.value)} className={claseInput} />;
   }
   return (
     <input
       type={tipo === "fecha" ? "date" : tipo === "numero" ? "number" : "text"}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={claseInputCelda}
+      className={claseInput}
     />
   );
 }
@@ -122,26 +120,21 @@ function Tabla({
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-gray-200 rounded-lg">
+    <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <table className="table-base">
         <thead>
           <tr className="bg-gray-50">
             {tabla.columnas.map((c) => (
-              <th
-                key={c.id}
-                className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200"
-              >
-                {c.etiqueta}
-              </th>
+              <th key={c.id}>{c.etiqueta}</th>
             ))}
-            <th className="px-2 py-2 text-center text-xs font-medium text-gray-500 border-b w-12">·</th>
+            <th className="text-center w-12">·</th>
           </tr>
         </thead>
         <tbody>
           {filas.map((fila, idx) => (
             <tr key={idx} className="hover:bg-gray-50">
               {tabla.columnas.map((c) => (
-                <td key={c.id} className="px-2 py-1.5 border-b border-r border-gray-200">
+                <td key={c.id}>
                   <Celda
                     tipo={c.tipo}
                     opciones={c.opciones}
@@ -150,7 +143,7 @@ function Tabla({
                   />
                 </td>
               ))}
-              <td className="px-1 py-1.5 border-b text-center">
+              <td className="text-center">
                 <button
                   type="button"
                   onClick={() => remove(idx)}
@@ -167,7 +160,7 @@ function Tabla({
       <button
         type="button"
         onClick={add}
-        className="mt-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1 rounded-lg text-sm transition-colors"
+        className="btn btn-secondary m-2 px-3 py-1"
       >
         {tabla.etiquetaAgregar ?? "+ Agregar fila"}
       </button>
@@ -237,13 +230,13 @@ export function Formatorenderizador({ config, proyectoId }: Props) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{config.nombre}</h1>
+          <h1 className="text-xl font-semibold text-gray-900">{config.nombre}</h1>
           <p className="text-sm text-gray-500">{config.codigo}</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -262,7 +255,7 @@ export function Formatorenderizador({ config, proyectoId }: Props) {
       )}
 
       {config.secciones.map((sec) => (
-        <div key={sec.id} className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+        <div key={sec.id} className="card p-4 space-y-4">
           {sec.titulo && <h2 className="font-semibold text-gray-900">{sec.titulo}</h2>}
           {sec.campos && sec.campos.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

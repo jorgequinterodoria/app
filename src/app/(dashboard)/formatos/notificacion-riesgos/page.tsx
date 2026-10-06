@@ -88,13 +88,13 @@ function NotificacionRiesgosForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Notificación de Riesgos</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Notificación de Riesgos</h1>
           <p className="text-sm text-gray-500">FOR-010 - Notificación de riesgos laborales</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -112,60 +112,60 @@ function NotificacionRiesgosForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <h2 className="font-semibold text-gray-900">Información General</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Actividad</label>
+            <label className="label">Actividad</label>
             <input
               type="text"
               value={actividad}
               onChange={(e) => setActividad(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tareas</label>
+            <label className="label">Tareas</label>
             <textarea
               value={tareas}
               onChange={(e) => setTareas(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cargos</label>
+            <label className="label">Cargos</label>
             <input
               type="text"
               value={cargos}
               onChange={(e) => setCargos(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Notificación</label>
+            <label className="label">Fecha de Notificación</label>
             <input
               type="date"
               value={fechaNotificacion}
               onChange={(e) => setFechaNotificacion(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-900">Factores de Riesgo</h2>
           <button
             onClick={addRiesgo}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1 rounded-lg text-sm transition-colors"
+            className="btn btn-secondary px-3 py-1"
           >
             + Agregar
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
@@ -190,7 +190,7 @@ function NotificacionRiesgosForm() {
                       type="text"
                       value={row.factorRiesgo}
                       onChange={(e) => updateRiesgo(row.id, "factorRiesgo", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -198,7 +198,7 @@ function NotificacionRiesgosForm() {
                       type="text"
                       value={row.clasificacion}
                       onChange={(e) => updateRiesgo(row.id, "clasificacion", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-r border-gray-200">
@@ -206,13 +206,14 @@ function NotificacionRiesgosForm() {
                       type="text"
                       value={row.efectoPosible}
                       onChange={(e) => updateRiesgo(row.id, "efectoPosible", e.target.value)}
-                      className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                      className="input"
                     />
                   </td>
                   <td className="px-3 py-2 border-b border-gray-200 text-center">
                     {riesgos.length > 1 && (
                       <button
                         onClick={() => removeRiesgo(row.id)}
+                        aria-label="Eliminar fila"
                         className="text-red-500 hover:text-red-700 text-sm font-medium"
                       >
                         ✕

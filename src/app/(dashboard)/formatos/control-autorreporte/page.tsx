@@ -130,13 +130,13 @@ function ControlAutorreporteForm() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Control de Autorreporte de Condiciones de Salud</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Control de Autorreporte de Condiciones de Salud</h1>
           <p className="text-sm text-gray-500">FOR-023</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -155,18 +155,18 @@ function ControlAutorreporteForm() {
       )}
 
       {/* Parte 1 */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">Parte 1 - Datos Personales</h2>
           <button
             onClick={() => setParte1((prev) => [...prev, createEmptyParte1()])}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1.5 rounded-lg text-xs transition-colors"
+            className="btn btn-secondary px-3 py-1.5 text-xs"
           >
             + Agregar fila
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg text-xs">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base text-xs">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-2 py-2 text-left font-medium text-gray-500 border-b border-r border-gray-200">Nombre</th>
@@ -187,44 +187,44 @@ function ControlAutorreporteForm() {
               {parte1.map((fila) => (
                 <tr key={fila.id} className="hover:bg-gray-50">
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.nombre} onChange={(e) => updateParte1(fila.id, "nombre", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.nombre} onChange={(e) => updateParte1(fila.id, "nombre", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.identificacion} onChange={(e) => updateParte1(fila.id, "identificacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.identificacion} onChange={(e) => updateParte1(fila.id, "identificacion", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="date" value={fila.fecha} onChange={(e) => updateParte1(fila.id, "fecha", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="date" value={fila.fecha} onChange={(e) => updateParte1(fila.id, "fecha", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <select value={fila.sexo} onChange={(e) => updateParte1(fila.id, "sexo", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.sexo} onChange={(e) => updateParte1(fila.id, "sexo", e.target.value)} className="input text-xs">
                       <option value="">-</option>
                       <option value="M">M</option>
                       <option value="F">F</option>
                     </select>
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input type="number" value={fila.edad} onChange={(e) => updateParte1(fila.id, "edad", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input type="number" value={fila.edad} onChange={(e) => updateParte1(fila.id, "edad", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.estadoCivil} onChange={(e) => updateParte1(fila.id, "estadoCivil", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.estadoCivil} onChange={(e) => updateParte1(fila.id, "estadoCivil", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.eps} onChange={(e) => updateParte1(fila.id, "eps", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.eps} onChange={(e) => updateParte1(fila.id, "eps", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.arl} onChange={(e) => updateParte1(fila.id, "arl", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.arl} onChange={(e) => updateParte1(fila.id, "arl", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.afp} onChange={(e) => updateParte1(fila.id, "afp", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.afp} onChange={(e) => updateParte1(fila.id, "afp", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.cargo} onChange={(e) => updateParte1(fila.id, "cargo", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.cargo} onChange={(e) => updateParte1(fila.id, "cargo", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.tiempoEmpresa} onChange={(e) => updateParte1(fila.id, "tiempoEmpresa", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tiempoEmpresa} onChange={(e) => updateParte1(fila.id, "tiempoEmpresa", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-gray-200">
-                    <input value={fila.tiempoSector} onChange={(e) => updateParte1(fila.id, "tiempoSector", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tiempoSector} onChange={(e) => updateParte1(fila.id, "tiempoSector", e.target.value)} className="input text-xs" />
                   </td>
                 </tr>
               ))}
@@ -234,18 +234,18 @@ function ControlAutorreporteForm() {
       </div>
 
       {/* Parte 2 */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 space-y-4">
+      <div className="card p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">Parte 2 - Condición de Salud</h2>
           <button
             onClick={() => setParte2((prev) => [...prev, createEmptyParte2()])}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-3 py-1.5 rounded-lg text-xs transition-colors"
+            className="btn btn-secondary px-3 py-1.5 text-xs"
           >
             + Agregar fila
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg text-xs">
+        <div className="overflow-x-auto rounded-lg border border-gray-200">
+          <table className="table-base text-xs">
             <thead>
               <tr className="bg-gray-50">
                 <th className="px-2 py-2 text-left font-medium text-gray-500 border-b border-r border-gray-200">Nombre</th>
@@ -263,43 +263,43 @@ function ControlAutorreporteForm() {
               {parte2.map((fila) => (
                 <tr key={fila.id} className="hover:bg-gray-50">
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.nombre} onChange={(e) => updateParte2(fila.id, "nombre", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.nombre} onChange={(e) => updateParte2(fila.id, "nombre", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.identificacion} onChange={(e) => updateParte2(fila.id, "identificacion", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.identificacion} onChange={(e) => updateParte2(fila.id, "identificacion", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.sintomaEnfermedad} onChange={(e) => updateParte2(fila.id, "sintomaEnfermedad", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.sintomaEnfermedad} onChange={(e) => updateParte2(fila.id, "sintomaEnfermedad", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.tiempoSintomas} onChange={(e) => updateParte2(fila.id, "tiempoSintomas", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tiempoSintomas} onChange={(e) => updateParte2(fila.id, "tiempoSintomas", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <select value={fila.afectaActividades} onChange={(e) => updateParte2(fila.id, "afectaActividades", e.target.value as "" | "SI" | "NO")} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.afectaActividades} onChange={(e) => updateParte2(fila.id, "afectaActividades", e.target.value as "" | "SI" | "NO")} className="input text-xs">
                       <option value="">-</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <select value={fila.haConsultado} onChange={(e) => updateParte2(fila.id, "haConsultado", e.target.value as "" | "SI" | "NO")} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.haConsultado} onChange={(e) => updateParte2(fila.id, "haConsultado", e.target.value as "" | "SI" | "NO")} className="input text-xs">
                       <option value="">-</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <select value={fila.incapacidad} onChange={(e) => updateParte2(fila.id, "incapacidad", e.target.value as "" | "SI" | "NO")} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.incapacidad} onChange={(e) => updateParte2(fila.id, "incapacidad", e.target.value as "" | "SI" | "NO")} className="input text-xs">
                       <option value="">-</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </td>
                   <td className="px-1 py-1 border-b border-r border-gray-200">
-                    <input value={fila.tiempoIncapacidad} onChange={(e) => updateParte2(fila.id, "tiempoIncapacidad", e.target.value)} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500" />
+                    <input value={fila.tiempoIncapacidad} onChange={(e) => updateParte2(fila.id, "tiempoIncapacidad", e.target.value)} className="input text-xs" />
                   </td>
                   <td className="px-1 py-1 border-b border-gray-200">
-                    <select value={fila.remitidoMedicinaLaboral} onChange={(e) => updateParte2(fila.id, "remitidoMedicinaLaboral", e.target.value as "" | "SI" | "NO")} className="w-full border border-gray-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500">
+                    <select value={fila.remitidoMedicinaLaboral} onChange={(e) => updateParte2(fila.id, "remitidoMedicinaLaboral", e.target.value as "" | "SI" | "NO")} className="input text-xs">
                       <option value="">-</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>

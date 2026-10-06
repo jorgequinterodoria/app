@@ -97,9 +97,9 @@ export default function ProyectoDetailPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Proyecto</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Proyecto</h1>
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="mt-2 text-gray-500">Cargando...</p>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function ProyectoDetailPage() {
   if (error && !proyecto) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Proyecto</h1>
+        <h1 className="text-xl font-semibold text-gray-900">Proyecto</h1>
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
           {error}
         </div>
@@ -127,10 +127,10 @@ export default function ProyectoDetailPage() {
           >
             ← Volver a proyectos
           </Link>
-          <h1 className="mt-2 text-2xl font-bold text-gray-900">{proyecto!.nombre}</h1>
+          <h1 className="mt-2 text-xl font-semibold text-gray-900">{proyecto!.nombre}</h1>
         </div>
         <span
-          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          className={`badge ${
             proyecto!.estado === "activa"
               ? "bg-green-100 text-green-800"
               : proyecto!.estado === "finalizada"
@@ -143,7 +143,7 @@ export default function ProyectoDetailPage() {
       </div>
 
       {/* Detalles del proyecto */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="card p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Información</h2>
         {proyecto!.descripcion && (
           <p className="text-sm text-gray-600 mb-4">{proyecto!.descripcion}</p>
@@ -193,7 +193,7 @@ export default function ProyectoDetailPage() {
       </div>
 
       {/* Empleados */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="card p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">
             Empleados ({empleados.length})
@@ -212,7 +212,7 @@ export default function ProyectoDetailPage() {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="btn btn-secondary"
           >
             {uploading ? "Subiendo..." : "Subir archivo Excel (FOR-003)"}
           </button>
@@ -262,11 +262,11 @@ export default function ProyectoDetailPage() {
       </div>
 
       {/* Formatos */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="card p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Formatos</h2>
         <Link
           href={`/formatos?proyectoId=${proyectoId}`}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="btn btn-secondary"
         >
           Ver formatos SST →
         </Link>

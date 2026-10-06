@@ -90,13 +90,13 @@ function InspeccionExtintoresForm() {
     <div className="space-y-4 p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Inspección de Extintores</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Inspección de Extintores</h1>
           <p className="text-sm text-gray-500">FOR-066</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn btn-primary"
         >
           {saving ? "Guardando..." : "Guardar"}
         </button>
@@ -114,70 +114,70 @@ function InspeccionExtintoresForm() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
+      <div className="card p-4 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Inspeccionado por</label>
+            <label className="label">Inspeccionado por</label>
             <input
               type="text"
               value={inspeccionadoPor}
               onChange={(e) => setInspeccionadoPor(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+            <label className="label">Fecha</label>
             <input
               type="date"
               value={fecha}
               onChange={(e) => setFecha(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Ubicación</label>
+            <label className="label">Ubicación</label>
             <input
               type="text"
               value={ubicacion}
               onChange={(e) => setUbicacion(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Extintor</label>
+            <label className="label">Tipo de Extintor</label>
             <input
               type="text"
               value={tipoExtintor}
               onChange={(e) => setTipoExtintor(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Capacidad</label>
+            <label className="label">Capacidad</label>
             <input
               type="text"
               value={capacidad}
               onChange={(e) => setCapacidad(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">N° Serie</label>
+            <label className="label">N° Serie</label>
             <input
               type="text"
               value={numeroSerie}
               onChange={(e) => setNumeroSerie(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         </div>
       </div>
 
       {/* Desktop: table */}
-      <div className="hidden sm:block overflow-x-auto">
-        <table className="min-w-full border border-gray-200 rounded-lg text-sm">
+      <div className="hidden sm:block overflow-x-auto rounded-lg border border-gray-200">
+        <table className="table-base">
           <thead>
             <tr className="bg-gray-50">
               <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
@@ -206,7 +206,7 @@ function InspeccionExtintoresForm() {
                           name={`ext-${item.id}`}
                           checked={item.estado === opt}
                           onChange={() => updateItem(item.id, "estado", opt)}
-                          className="text-blue-600 focus:ring-blue-500"
+                          className="text-blue-600"
                         />
                         <span className="text-sm">{opt}</span>
                       </label>
@@ -219,7 +219,7 @@ function InspeccionExtintoresForm() {
                     value={item.observacion}
                     onChange={(e) => updateItem(item.id, "observacion", e.target.value)}
                     placeholder="Observación..."
-                    className="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500"
+                    className="input"
                   />
                 </td>
               </tr>
@@ -231,7 +231,7 @@ function InspeccionExtintoresForm() {
       {/* Mobile: cards */}
       <div className="sm:hidden space-y-3">
         {items.map((item) => (
-          <div key={item.id} className="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
+          <div key={item.id} className="card p-4 space-y-2">
             <div className="font-medium text-gray-900 text-sm">{item.nombre}</div>
             <div className="flex items-center gap-3">
               {(["SI", "NO", "NA"] as const).map((opt) => (
@@ -241,7 +241,7 @@ function InspeccionExtintoresForm() {
                     name={`ext-m-${item.id}`}
                     checked={item.estado === opt}
                     onChange={() => updateItem(item.id, "estado", opt)}
-                    className="text-blue-600 focus:ring-blue-500"
+                    className="text-blue-600"
                   />
                   <span className="text-sm">{opt}</span>
                 </label>
@@ -252,7 +252,7 @@ function InspeccionExtintoresForm() {
               value={item.observacion}
               onChange={(e) => updateItem(item.id, "observacion", e.target.value)}
               placeholder="Observación..."
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input"
             />
           </div>
         ))}
