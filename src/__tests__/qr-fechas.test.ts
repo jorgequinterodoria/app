@@ -27,4 +27,18 @@ describe("qr-fechas", () => {
     expect(esFechaPasada("14-10-2026")).toBe(false);
     expect(esFechaPasada("")).toBe(false);
   });
+
+  it("rechaza fechas de calendario imposibles en esFechaPasada", () => {
+    const ahora = new Date("2026-10-14T15:00:00Z");
+    expect(esFechaPasada("2026-02-30", ahora)).toBe(false);
+    expect(esFechaPasada("2026-13-01", ahora)).toBe(false);
+  });
+
+  it("finDeDiaColombia lanza RangeError con formato inválido", () => {
+    expect(() => finDeDiaColombia("14-10-2026")).toThrow(RangeError);
+  });
+
+  it("finDeDiaColombia lanza RangeError con fecha de calendario imposible", () => {
+    expect(() => finDeDiaColombia("2026-02-30")).toThrow(RangeError);
+  });
 });
