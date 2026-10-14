@@ -159,12 +159,12 @@ function RegistroIncidentesForm() {
               ].map((h) => (
                 <th
                   key={h}
-                  className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200 min-w-[130px]"
+                  className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200 min-w-32.5"
                 >
                   {h}
                 </th>
               ))}
-              <th className="px-3 py-2 border-b border-gray-200 min-w-[50px]" />
+              <th className="px-3 py-2 border-b border-gray-200 min-w-12.5" />
             </tr>
           </thead>
           <tbody>

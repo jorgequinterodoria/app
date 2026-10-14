@@ -229,11 +229,11 @@ function AsistenciaDiariaForm() {
           <table className="table-base">
             <thead>
               <tr className="bg-gray-50">
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-[180px]">
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-45">
                   Empleado
                 </th>
                 {days.map((day, i) => (
-                  <th key={i} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-[140px]">
+                  <th key={i} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-35">
                     {day}
                   </th>
                 ))}
