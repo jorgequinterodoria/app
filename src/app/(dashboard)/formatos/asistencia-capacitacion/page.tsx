@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import QRCode from "qrcode";
 import { Suspense } from "react";
+import { esFechaPasada, esFechaValida, formatFechaLarga } from "@/lib/qr-fechas";
 
 interface Empleado {
   id: string;
@@ -19,6 +21,56 @@ interface AsistenciaRow {
   documentoIdentificacion: string;
   cargo: string;
   firma: boolean;
+}
+
+interface QrRegistro {
+  empleadoId: string;
+  fecha: string;
+  sintomas: string | null;
+  novedad: string | null;
+}
+
+type SetAsistencia = Dispatch<SetStateAction<AsistenciaRow[]>>;
+type SetQrFirmas = Dispatch<SetStateAction<Set<string>>>;
+type SetBoolean = Dispatch<SetStateAction<boolean>>;
+type SetMensaje = Dispatch<SetStateAction<{ type: "success" | "error"; text: string } | null>>;
+
+function useHydratarFirmas(
+  proyectoId: string,
+  fecha: string,
+  empleados: Empleado[],
+  setAsistencia: SetAsistencia,
+  setQrFirmas: SetQrFirmas,
+  setCargandoDatos: SetBoolean,
+  setMessage: SetMensaje,
+) {
+  useEffect(() => {
+    if (!proyectoId || !fecha || !esFechaValida(fecha) || empleados.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      setCargandoDatos(true);
+      try {
+        const res = await fetch(
+          `/api/qr/registros?proyectoId=${proyectoId}&formatoTipo=FOR-009&desde=${fecha}&hasta=${fecha}`,
+          { credentials: "include" },
+        );
+        const registros: QrRegistro[] = res.ok ? await res.json() : [];
+        if (cancelled) return;
+        const firmados = new Set(registros.map((r) => r.empleadoId));
+        setQrFirmas(firmados);
+        setAsistencia((prev) =>
+          prev.map((row) => (firmados.has(row.empleadoId) ? { ...row, firma: true } : row))
+        );
+      } catch {
+        if (!cancelled) setMessage({ type: "error", text: "No se pudieron cargar los registros del QR" });
+      } finally {
+        if (!cancelled) setCargandoDatos(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [proyectoId, fecha, empleados, setAsistencia, setQrFirmas, setCargandoDatos, setMessage]);
 }
 
 function AsistenciaCapacitacionForm() {
@@ -39,6 +91,9 @@ function AsistenciaCapacitacionForm() {
   const [qrImage, setQrImage] = useState<string | null>(null);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [qrFirmas, setQrFirmas] = useState<Set<string>>(new Set());
+  const [qrFecha, setQrFecha] = useState<string | null>(null);
+  const [cargandoDatos, setCargandoDatos] = useState(false);
 
   useEffect(() => {
     if (!proyectoId) return;
@@ -58,11 +113,20 @@ function AsistenciaCapacitacionForm() {
       });
   }, [proyectoId]);
 
+  useHydratarFirmas(proyectoId, fecha, empleados, setAsistencia, setQrFirmas, setCargandoDatos, setMessage);
+
   function toggleFirma(index: number) {
     setAsistencia((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], firma: !updated[index].firma };
       return updated;
+    });
+    setQrFirmas((prev) => {
+      const empleadoId = asistencia[index]?.empleadoId;
+      if (!empleadoId || !prev.has(empleadoId)) return prev;
+      const next = new Set(prev);
+      next.delete(empleadoId);
+      return next;
     });
   }
 
@@ -103,6 +167,10 @@ function AsistenciaCapacitacionForm() {
   }
 
   async function handleGenerateQr() {
+    if (!fecha) {
+      setMessage({ type: "error", text: "Seleccione la fecha de la capacitación" });
+      return;
+    }
     setGeneratingQr(true);
     setMessage(null);
 
@@ -113,12 +181,15 @@ function AsistenciaCapacitacionForm() {
         body: JSON.stringify({
           proyectoId,
           formatoTipo: "FOR-009",
-          durationHours: 24,
+          fecha,
         }),
         credentials: "include",
       });
 
-      if (!res.ok) throw new Error("Error al generar QR");
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Error al generar QR");
+      }
 
       const data = await res.json();
       const fullUrl = `${window.location.origin}${data.qrUrl}`;
@@ -126,8 +197,13 @@ function AsistenciaCapacitacionForm() {
 
       const qrDataUrl = await QRCode.toDataURL(fullUrl, { width: 300, margin: 2 });
       setQrImage(qrDataUrl);
-    } catch {
-      setMessage({ type: "error", text: "Error al generar el QR" });
+      setQrFecha(data.fecha);
+
+      if (data.alreadyExisted) {
+        setMessage({ type: "success", text: "Esta fecha ya tenía un QR; se muestra el existente." });
+      }
+    } catch (e) {
+      setMessage({ type: "error", text: e instanceof Error ? e.message : "Error al generar el QR" });
     } finally {
       setGeneratingQr(false);
     }
@@ -166,7 +242,7 @@ function AsistenciaCapacitacionForm() {
           </button>
           <button
             onClick={handleGenerateQr}
-            disabled={generatingQr}
+            disabled={generatingQr || !fecha || esFechaPasada(fecha)}
             className="btn bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white"
           >
             {generatingQr ? "Generando..." : "Generar QR"}
@@ -191,6 +267,11 @@ function AsistenciaCapacitacionForm() {
           <h2 className="font-semibold text-gray-900">QR de Asistencia</h2>
           <Image src={qrImage} alt="QR Code" width={220} height={220} className="rounded-lg" unoptimized />
           <p className="text-xs text-gray-500 break-all text-center max-w-xs">{qrUrl}</p>
+          {qrFecha && (
+            <p className="text-xs font-medium text-gray-700">
+              QR para el {formatFechaLarga(qrFecha)}
+            </p>
+          )}
           <button
             onClick={handleDownloadQr}
             className="btn btn-secondary"
@@ -269,53 +350,64 @@ function AsistenciaCapacitacionForm() {
         </div>
       </div>
 
-      {asistencia.length > 0 && (
-        <div className="card p-4 space-y-4">
-          <h2 className="font-semibold text-gray-900">Lista de Asistencia</h2>
-          <div className="overflow-x-auto rounded-lg border border-gray-200">
-            <table className="table-base">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
-                    Nombre
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
-                    Documento Identificación
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
-                    Cargo
-                  </th>
-                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200">
-                    Firma
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {asistencia.map((row, i) => (
-                  <tr key={row.empleadoId} className="hover:bg-gray-50">
-                    <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-900">
-                      {row.nombre}
-                    </td>
-                    <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-700">
-                      {row.documentoIdentificacion}
-                    </td>
-                    <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-700">
-                      {row.cargo}
-                    </td>
-                    <td className="px-3 py-2 border-b border-gray-200 text-center">
-                      <input
-                        type="checkbox"
-                        checked={row.firma}
-                        onChange={() => toggleFirma(i)}
-                        className="h-4 w-4 rounded border-gray-300 text-blue-600"
-                      />
-                    </td>
+      {cargandoDatos ? (
+        <div className="text-center text-gray-500 py-8">Cargando registros...</div>
+      ) : (
+        asistencia.length > 0 && (
+          <div className="card p-4 space-y-4">
+            <h2 className="font-semibold text-gray-900">Lista de Asistencia</h2>
+            <div className="overflow-x-auto rounded-lg border border-gray-200">
+              <table className="table-base">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
+                      Nombre
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
+                      Documento Identificación
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 border-b border-r border-gray-200">
+                      Cargo
+                    </th>
+                    <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200">
+                      Firma
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {asistencia.map((row, i) => (
+                    <tr key={row.empleadoId} className="hover:bg-gray-50">
+                      <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-900">
+                        {row.nombre}
+                      </td>
+                      <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-700">
+                        {row.documentoIdentificacion}
+                      </td>
+                      <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-700">
+                        {row.cargo}
+                      </td>
+                      <td className="px-3 py-2 border-b border-gray-200 text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          <input
+                            type="checkbox"
+                            checked={row.firma}
+                            onChange={() => toggleFirma(i)}
+                            className="h-4 w-4 rounded border-gray-300 text-blue-600"
+                          />
+                          {qrFirmas.has(row.empleadoId) && (
+                            <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 rounded px-1 py-0.5">
+                              QR
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )
       )}
 
       {empleados.length === 0 && proyectoId && (
