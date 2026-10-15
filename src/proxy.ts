@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/auth";
+import { UUID_RE } from "@/lib/qr-validacion";
 
 const publicPaths = ["/login", "/register"];
 
 // Flujo de asistencia QR: empleados sin cuenta firman desde el celular.
 // Solo son públicos el lookup por token (UUID) y el registro; generate sigue protegido.
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function isPublicQrApi(pathname: string) {
   if (pathname === "/api/qr/register") return true;
   const match = pathname.match(/^\/api\/qr\/([^/]+)$/);

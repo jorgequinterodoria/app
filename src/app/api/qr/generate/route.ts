@@ -4,9 +4,7 @@ import { asistenciaQr } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import crypto from "crypto";
 import { esFechaPasada, esFechaValida, finDeDiaColombia, FECHA_ISO_RE } from "@/lib/qr-fechas";
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const FORMATOS_QR = new Set(["FOR-006", "FOR-009"]);
+import { UUID_RE, esFormatoQr } from "@/lib/qr-validacion";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -26,7 +24,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!FORMATOS_QR.has(formatoTipo)) {
+  if (!esFormatoQr(formatoTipo)) {
     return NextResponse.json(
       { error: "formatoTipo inválido; se espera FOR-006 o FOR-009" },
       { status: 400 }

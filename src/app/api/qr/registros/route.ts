@@ -4,8 +4,7 @@ import { asistenciaQr, asistenciaRegistros, empleados } from "@/lib/db/schema";
 import { and, asc, eq, gte, lte } from "drizzle-orm";
 import { getUserIdFromCookie } from "@/lib/auth";
 import { esFechaValida } from "@/lib/qr-fechas";
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+import { UUID_RE, esFormatoQr } from "@/lib/qr-validacion";
 
 export async function GET(request: NextRequest) {
   const userId = await getUserIdFromCookie(
@@ -31,6 +30,13 @@ export async function GET(request: NextRequest) {
   if (!UUID_RE.test(proyectoId)) {
     return NextResponse.json(
       { error: "proyectoId inválido: se espera un UUID" },
+      { status: 400 }
+    );
+  }
+
+  if (!esFormatoQr(formatoTipo)) {
+    return NextResponse.json(
+      { error: "formatoTipo inválido; se espera FOR-006 o FOR-009" },
       { status: 400 }
     );
   }
