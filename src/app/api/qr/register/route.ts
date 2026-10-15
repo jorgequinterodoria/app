@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       novedad: novedad || null,
       ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || null,
     })
-    .onConflictDoNothing()
+    .onConflictDoNothing({ target: [asistenciaRegistros.qrId, asistenciaRegistros.empleadoId] })
     .returning();
 
   if (!registro) {
