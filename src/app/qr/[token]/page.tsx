@@ -11,7 +11,13 @@ interface Empleado {
 }
 
 interface QrData {
-  qr: { id: string; proyectoId: string; formatoTipo: string; expiresAt: string };
+  qr: {
+    id: string;
+    proyectoId: string;
+    formatoTipo: string;
+    expiresAt: string;
+    fecha: string | null;
+  };
   proyecto: { nombre: string } | null;
   empleados: Empleado[];
 }
@@ -25,6 +31,19 @@ const NOVEDADES = [
   { value: "EG", label: "EG - Egreso" },
   { value: "SJC", label: "SJC - Sin Justificación" },
 ];
+
+function formatFechaLarga(iso: string | null): string | null {
+  if (!iso) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("es-CO", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
 
 export default function QrAttendancePage() {
   const params = useParams();
@@ -137,9 +156,14 @@ export default function QrAttendancePage() {
           <h1 className="text-xl font-semibold text-gray-900 text-center mb-1">
             {data?.proyecto?.nombre || "Registro de Asistencia"}
           </h1>
-          <p className="text-sm text-gray-500 text-center mb-6">
+          <p className="text-sm text-gray-500 text-center mb-1">
             Complete los campos para registrar su asistencia
           </p>
+          {data?.qr.fecha && (
+            <p className="text-sm font-medium text-gray-700 text-center mb-6 capitalize">
+              Registro del {formatFechaLarga(data.qr.fecha)}
+            </p>
+          )}
 
           <div className="space-y-5">
             <div>
