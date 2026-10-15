@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { hoyColombia, esFechaPasada, finDeDiaColombia } from "@/lib/qr-fechas";
+import { hoyColombia, esFechaPasada, esFechaValida, finDeDiaColombia } from "@/lib/qr-fechas";
 
 describe("qr-fechas", () => {
   it("hoyColombia devuelve YYYY-MM-DD en hora Colombia", () => {
@@ -21,6 +21,12 @@ describe("qr-fechas", () => {
   it("finDeDiaColombia devuelve 23:59:59 UTC-5 del día", () => {
     // 23:59:59 COT (UTC-5) = 04:59:59 UTC del día siguiente
     expect(finDeDiaColombia("2026-10-14").toISOString()).toBe("2026-10-15T04:59:59.000Z");
+  });
+
+  it("esFechaValida valida días reales del calendario", () => {
+    expect(esFechaValida("2026-02-30")).toBe(false);
+    expect(esFechaValida("2026-13-40")).toBe(false);
+    expect(esFechaValida("2026-10-14")).toBe(true);
   });
 
   it("rechaza formatos de fecha inválidos en esFechaPasada", () => {

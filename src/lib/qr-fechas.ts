@@ -1,7 +1,7 @@
 const FECHA_ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
 const COT_OFFSET = "-05:00";
 
-function esFechaValida(fecha: string): boolean {
+export function esFechaValida(fecha: string): boolean {
   if (!FECHA_ISO_RE.test(fecha)) return false;
   const d = new Date(`${fecha}T00:00:00Z`);
   // NaN-check primero: toISOString() lanza RangeError en fechas fuera de rango (mes 13, día 40)

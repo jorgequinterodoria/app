@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { asistenciaQr } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import crypto from "crypto";
-import { esFechaPasada, finDeDiaColombia } from "@/lib/qr-fechas";
+import { esFechaPasada, esFechaValida, finDeDiaColombia } from "@/lib/qr-fechas";
 
 const FECHA_ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -21,6 +21,13 @@ export async function POST(request: NextRequest) {
   if (!FECHA_ISO_RE.test(fecha)) {
     return NextResponse.json(
       { error: "Fecha inválida; use el formato YYYY-MM-DD" },
+      { status: 400 }
+    );
+  }
+
+  if (!esFechaValida(fecha)) {
+    return NextResponse.json(
+      { error: "Fecha inexistente; use un día válido del calendario" },
       { status: 400 }
     );
   }
