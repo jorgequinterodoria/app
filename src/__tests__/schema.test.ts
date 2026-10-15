@@ -92,6 +92,7 @@ describe("Database Schema", () => {
       expect(columns).toContain("id");
       expect(columns).toContain("proyectoId");
       expect(columns).toContain("formatoTipo");
+      expect(columns).toContain("fecha");
       expect(columns).toContain("token");
       expect(columns).toContain("expiresAt");
       expect(columns).toContain("activo");

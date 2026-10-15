@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, timestamp, boolean, jsonb, date, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -77,11 +77,15 @@ export const asistenciaQr = pgTable("asistencia_qr", {
     .references(() => proyectos.id)
     .notNull(),
   formatoTipo: varchar("formato_tipo", { length: 255 }).notNull(),
+  fecha: date("fecha"),
   token: varchar("token", { length: 255 }).unique().notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   activo: boolean("activo").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  proyectoFormatoFechaIdx: uniqueIndex("asistencia_qr_proyecto_formato_fecha_idx")
+    .on(table.proyectoId, table.formatoTipo, table.fecha),
+}));
 
 export const asistenciaRegistros = pgTable("asistencia_registros", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -95,4 +99,7 @@ export const asistenciaRegistros = pgTable("asistencia_registros", {
   sintomas: varchar("sintomas", { length: 255 }),
   novedad: varchar("novedad", { length: 255 }),
   ipAddress: varchar("ip_address", { length: 45 }),
-});
+}, (table) => ({
+  qrEmpleadoIdx: uniqueIndex("asistencia_registros_qr_empleado_idx")
+    .on(table.qrId, table.empleadoId),
+}));
