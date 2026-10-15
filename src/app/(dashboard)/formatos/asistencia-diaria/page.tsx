@@ -6,68 +6,20 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import QRCode from "qrcode";
 import { Suspense } from "react";
-import { esFechaPasada, esFechaValida, formatFechaLarga, hoyColombia } from "@/lib/qr-fechas";
+import { esFechaPasada, esFechaValida, formatFechaLarga } from "@/lib/qr-fechas";
+import {
+  construirAsistenciaHidratada,
+  resolverDiaQr,
+  sanitizarQrCells,
+  type DiaAsistencia,
+  type QrRegistro,
+} from "@/lib/qr-asistencia";
 
 interface Empleado {
   id: string;
   nombre: string;
   identificacion: string;
   cargo: string;
-}
-
-interface DiaAsistencia {
-  sintomas: "SI" | "NO" | "";
-  novedad: string;
-}
-
-interface QrRegistro {
-  empleadoId: string;
-  fecha: string;
-  sintomas: string | null;
-  novedad: string | null;
-}
-
-function construirAsistenciaHidratada(
-  empleados: Empleado[],
-  base: Record<string, DiaAsistencia[]> | null,
-  registros: QrRegistro[],
-  days: { iso: string }[],
-): { merged: Record<string, DiaAsistencia[]>; marks: Record<string, number[]> } {
-  const merged: Record<string, DiaAsistencia[]> = {};
-  for (const emp of empleados) {
-    merged[emp.id] =
-      base?.[emp.id]?.length === 7
-        ? base[emp.id].map((c) => ({
-            sintomas: (c.sintomas || "") as DiaAsistencia["sintomas"],
-            novedad: c.novedad || "",
-          }))
-        : Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
-  }
-
-  const fechaToIndex = new Map(days.map((d, i) => [d.iso, i] as const));
-  const marks: Record<string, number[]> = {};
-  for (const reg of registros) {
-    const dayIndex = fechaToIndex.get(reg.fecha) ?? -1;
-    if (dayIndex === -1) continue;
-    if (!reg.sintomas && !reg.novedad) continue;
-    const cell = merged[reg.empleadoId]?.[dayIndex];
-    if (!cell) continue;
-    if (cell.sintomas === "" && cell.novedad === "") {
-      cell.sintomas = (reg.sintomas || "") as DiaAsistencia["sintomas"];
-      cell.novedad = reg.novedad || "";
-      if (!marks[reg.empleadoId]) marks[reg.empleadoId] = [];
-      if (!marks[reg.empleadoId].includes(dayIndex)) marks[reg.empleadoId].push(dayIndex);
-    }
-  }
-  return { merged, marks };
-}
-
-function resolverDiaQr(days: { iso: string }[], diaQr: string): string {
-  if (days.length === 0) return "";
-  const isos = days.map((d) => d.iso);
-  if (diaQr && isos.includes(diaQr)) return diaQr;
-  const hoy = hoyColombia();
-  return isos.includes(hoy) ? hoy : isos[0];
 }
 
 type SetAsistencia = Dispatch<SetStateAction<Record<string, DiaAsistencia[]>>>;
@@ -108,8 +60,15 @@ function useHydratarAsistencia(
           .reverse()
           .find((f: { datos?: { fechaInicio?: string } }) => f.datos?.fechaInicio === fechaInicio);
         const base: Record<string, DiaAsistencia[]> | null = guardado?.datos?.asistencia ?? null;
+        const prevMarks = sanitizarQrCells(guardado?.datos?.qrCells, empleados);
 
-        const { merged, marks } = construirAsistenciaHidratada(empleados, base, registros, days);
+        const { merged, marks } = construirAsistenciaHidratada(
+          empleados,
+          base,
+          registros,
+          days,
+          prevMarks,
+        );
         setAsistencia(merged);
         setQrCells(marks);
       } catch {
@@ -210,7 +169,7 @@ function AsistenciaDiariaForm() {
           proyectoId: proyectoId,
           tipo: "Asistencia Diaria",
           codigo: "FOR-006",
-          datos: { frenteObra, fechaInicio, fechaFin, asistencia },
+          datos: { frenteObra, fechaInicio, fechaFin, asistencia, qrCells },
         }),
         credentials: "include",
       });
