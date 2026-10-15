@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { hoyColombia, esFechaPasada, esFechaValida, finDeDiaColombia } from "@/lib/qr-fechas";
+import { hoyColombia, esFechaPasada, esFechaValida, finDeDiaColombia, formatFechaLarga } from "@/lib/qr-fechas";
 
 describe("qr-fechas", () => {
   it("hoyColombia devuelve YYYY-MM-DD en hora Colombia", () => {
@@ -51,5 +51,17 @@ describe("qr-fechas", () => {
 
   it("finDeDiaColombia lanza RangeError con fecha de calendario imposible", () => {
     expect(() => finDeDiaColombia("2026-02-30")).toThrow(RangeError);
+  });
+
+  it("formatFechaLarga formatea fecha ISO en español largo", () => {
+    expect(formatFechaLarga("2026-10-14")).toBe("miércoles, 14 de octubre de 2026");
+  });
+
+  it("formatFechaLarga devuelve null con fecha nula", () => {
+    expect(formatFechaLarga(null)).toBe(null);
+  });
+
+  it("formatFechaLarga devuelve null en fechas de calendario imposibles", () => {
+    expect(formatFechaLarga("2026-02-30")).toBe(null);
   });
 });

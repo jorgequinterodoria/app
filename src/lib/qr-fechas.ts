@@ -24,3 +24,15 @@ export function finDeDiaColombia(fecha: string): Date {
   }
   return new Date(`${fecha}T23:59:59${COT_OFFSET}`);
 }
+
+export function formatFechaLarga(iso: string | null): string | null {
+  if (!iso || !esFechaValida(iso)) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("es-CO", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}

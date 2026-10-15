@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { formatFechaLarga } from "@/lib/qr-fechas";
 
 interface Empleado {
   id: string;
@@ -32,19 +33,6 @@ const NOVEDADES = [
   { value: "SJC", label: "SJC - Sin Justificación" },
 ];
 
-function formatFechaLarga(iso: string | null): string | null {
-  if (!iso) return null;
-  const [y, m, d] = iso.split("-").map(Number);
-  if (!y || !m || !d) return null;
-  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("es-CO", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-}
-
 export default function QrAttendancePage() {
   const params = useParams();
   const token = params.token as string;
@@ -59,6 +47,8 @@ export default function QrAttendancePage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const fechaLarga = data?.qr.fecha ? formatFechaLarga(data.qr.fecha) : null;
 
   useEffect(() => {
     async function fetchQr() {
@@ -158,14 +148,15 @@ export default function QrAttendancePage() {
           </h1>
           <p
             className={`text-sm text-gray-500 text-center ${
-              data?.qr.fecha ? "mb-1" : "mb-6"
+              fechaLarga ? "mb-1" : "mb-6"
             }`}
           >
             Complete los campos para registrar su asistencia
           </p>
-          {data?.qr.fecha && (
-            <p className="text-sm font-medium text-gray-700 text-center mb-6 capitalize">
-              Registro del {formatFechaLarga(data.qr.fecha)}
+          {fechaLarga && (
+            <p className="text-sm font-medium text-gray-700 text-center mb-6">
+              Registro del{" "}
+              <time dateTime={data?.qr.fecha ?? undefined}>{fechaLarga}</time>
             </p>
           )}
 
