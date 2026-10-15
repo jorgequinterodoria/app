@@ -1,4 +1,4 @@
-const FECHA_ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
+export const FECHA_ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
 const COT_OFFSET = "-05:00";
 
 export function esFechaValida(fecha: string): boolean {

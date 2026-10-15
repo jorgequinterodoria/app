@@ -29,6 +29,11 @@ describe("qr-fechas", () => {
     expect(esFechaValida("2026-10-14")).toBe(true);
   });
 
+  it("esFechaValida valida años bisiestos", () => {
+    expect(esFechaValida("2024-02-29")).toBe(true);
+    expect(esFechaValida("2026-02-29")).toBe(false);
+  });
+
   it("rechaza formatos de fecha inválidos en esFechaPasada", () => {
     expect(esFechaPasada("14-10-2026")).toBe(false);
     expect(esFechaPasada("")).toBe(false);

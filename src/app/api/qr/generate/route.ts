@@ -3,9 +3,7 @@ import { db } from "@/lib/db";
 import { asistenciaQr } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import crypto from "crypto";
-import { esFechaPasada, esFechaValida, finDeDiaColombia } from "@/lib/qr-fechas";
-
-const FECHA_ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
+import { esFechaPasada, esFechaValida, finDeDiaColombia, FECHA_ISO_RE } from "@/lib/qr-fechas";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -46,7 +44,6 @@ export async function POST(request: NextRequest) {
       eq(asistenciaQr.proyectoId, proyectoId),
       eq(asistenciaQr.formatoTipo, formatoTipo),
       eq(asistenciaQr.fecha, fecha),
-      eq(asistenciaQr.activo, true),
     ))
     .limit(1);
 
@@ -74,7 +71,7 @@ export async function POST(request: NextRequest) {
       expiresAt,
       activo: true,
     })
-    .onConflictDoNothing()
+    .onConflictDoNothing({ target: [asistenciaQr.proyectoId, asistenciaQr.formatoTipo, asistenciaQr.fecha] })
     .returning();
 
   if (!qr) {
@@ -88,6 +85,14 @@ export async function POST(request: NextRequest) {
         eq(asistenciaQr.fecha, fecha),
       ))
       .limit(1);
+
+    if (!reintentado) {
+      return NextResponse.json(
+        { error: "No se pudo crear ni recuperar el QR; intente de nuevo" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({
       qrUrl: `/qr/${reintentado.token}`,
       token: reintentado.token,
