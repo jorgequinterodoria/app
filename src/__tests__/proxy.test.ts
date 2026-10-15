@@ -41,6 +41,12 @@ describe("proxy (middleware)", () => {
       expect(res.status).toBe(401);
     });
 
+    it("rechaza GET /api/qr/registros sin sesión (401)", async () => {
+      const res = await proxy(req("/api/qr/registros"));
+      expect(res.status).toBe(401);
+      expect(await res.json()).toEqual({ error: "No autorizado" });
+    });
+
     it("redirige a /login las rutas de app sin sesión", async () => {
       const res = await proxy(req("/formatos"));
       expect(res.status).toBeGreaterThanOrEqual(300);
