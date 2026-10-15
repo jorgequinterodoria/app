@@ -45,21 +45,26 @@ function useHydratarFirmas(
   setMessage: SetMensaje,
 ) {
   useEffect(() => {
-    if (!proyectoId || !fecha || !esFechaValida(fecha) || empleados.length === 0) return;
     let cancelled = false;
     (async () => {
+      if (!proyectoId || !fecha || !esFechaValida(fecha) || empleados.length === 0) {
+        setCargandoDatos(false);
+        setQrFirmas(new Set());
+        return;
+      }
       setCargandoDatos(true);
       try {
         const res = await fetch(
           `/api/qr/registros?proyectoId=${proyectoId}&formatoTipo=FOR-009&desde=${fecha}&hasta=${fecha}`,
           { credentials: "include" },
         );
-        const registros: QrRegistro[] = res.ok ? await res.json() : [];
+        if (!res.ok) throw new Error("Error al cargar registros");
+        const registros: QrRegistro[] = await res.json();
         if (cancelled) return;
         const firmados = new Set(registros.map((r) => r.empleadoId));
         setQrFirmas(firmados);
         setAsistencia((prev) =>
-          prev.map((row) => (firmados.has(row.empleadoId) ? { ...row, firma: true } : row))
+          prev.map((row) => ({ ...row, firma: firmados.has(row.empleadoId) }))
         );
       } catch {
         if (!cancelled) setMessage({ type: "error", text: "No se pudieron cargar los registros del QR" });
@@ -115,15 +120,14 @@ function AsistenciaCapacitacionForm() {
 
   useHydratarFirmas(proyectoId, fecha, empleados, setAsistencia, setQrFirmas, setCargandoDatos, setMessage);
 
-  function toggleFirma(index: number) {
-    setAsistencia((prev) => {
-      const updated = [...prev];
-      updated[index] = { ...updated[index], firma: !updated[index].firma };
-      return updated;
-    });
+  function toggleFirma(empleadoId: string) {
+    setAsistencia((prev) =>
+      prev.map((row) =>
+        row.empleadoId === empleadoId ? { ...row, firma: !row.firma } : row
+      )
+    );
     setQrFirmas((prev) => {
-      const empleadoId = asistencia[index]?.empleadoId;
-      if (!empleadoId || !prev.has(empleadoId)) return prev;
+      if (!prev.has(empleadoId)) return prev;
       const next = new Set(prev);
       next.delete(empleadoId);
       return next;
@@ -375,7 +379,7 @@ function AsistenciaCapacitacionForm() {
                   </tr>
                 </thead>
                 <tbody>
-                  {asistencia.map((row, i) => (
+                  {asistencia.map((row) => (
                     <tr key={row.empleadoId} className="hover:bg-gray-50">
                       <td className="px-3 py-2 border-b border-r border-gray-200 text-sm text-gray-900">
                         {row.nombre}
@@ -391,7 +395,7 @@ function AsistenciaCapacitacionForm() {
                           <input
                             type="checkbox"
                             checked={row.firma}
-                            onChange={() => toggleFirma(i)}
+                            onChange={() => toggleFirma(row.empleadoId)}
                             className="h-4 w-4 rounded border-gray-300 text-blue-600"
                           />
                           {qrFirmas.has(row.empleadoId) && (

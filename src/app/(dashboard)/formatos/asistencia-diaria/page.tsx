@@ -99,8 +99,9 @@ function useHydratarAsistencia(
             { credentials: "include" },
           ),
         ]);
-        const formatosList = fmtRes.ok ? await fmtRes.json() : [];
-        const registros: QrRegistro[] = qrRes.ok ? await qrRes.json() : [];
+        if (!fmtRes.ok || !qrRes.ok) throw new Error("No se pudieron cargar los registros");
+        const formatosList = await fmtRes.json();
+        const registros: QrRegistro[] = await qrRes.json();
         if (cancelled) return;
 
         const guardado = [...formatosList]
