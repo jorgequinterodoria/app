@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { asistenciaQr, asistenciaRegistros } from "@/lib/db/schema";
+import { asistenciaQr, asistenciaRegistros, empleados } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(request: NextRequest) {
@@ -41,6 +41,19 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const [empleado] = await db
+    .select()
+    .from(empleados)
+    .where(eq(empleados.id, empleadoId))
+    .limit(1);
+
+  if (!empleado || empleado.proyectoId !== qr.proyectoId) {
+    return NextResponse.json(
+      { error: "El empleado no pertenece a este proyecto" },
+      { status: 400 }
+    );
+  }
+
   const [registro] = await db
     .insert(asistenciaRegistros)
     .values({
@@ -50,7 +63,15 @@ export async function POST(request: NextRequest) {
       novedad: novedad || null,
       ipAddress: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || null,
     })
+    .onConflictDoNothing()
     .returning();
+
+  if (!registro) {
+    return NextResponse.json(
+      { error: "Ya te registraste hoy" },
+      { status: 409 }
+    );
+  }
 
   return NextResponse.json({ success: true, registro }, { status: 201 });
 }
