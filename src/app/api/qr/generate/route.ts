@@ -5,6 +5,9 @@ import { and, eq } from "drizzle-orm";
 import crypto from "crypto";
 import { esFechaPasada, esFechaValida, finDeDiaColombia, FECHA_ISO_RE } from "@/lib/qr-fechas";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const FORMATOS_QR = new Set(["FOR-006", "FOR-009"]);
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const { proyectoId, formatoTipo, fecha } = body;
@@ -12,6 +15,20 @@ export async function POST(request: NextRequest) {
   if (!proyectoId || !formatoTipo || !fecha) {
     return NextResponse.json(
       { error: "Campos obligatorios faltantes (proyectoId, formatoTipo, fecha)" },
+      { status: 400 }
+    );
+  }
+
+  if (!UUID_RE.test(proyectoId)) {
+    return NextResponse.json(
+      { error: "proyectoId inválido: se espera un UUID" },
+      { status: 400 }
+    );
+  }
+
+  if (!FORMATOS_QR.has(formatoTipo)) {
+    return NextResponse.json(
+      { error: "formatoTipo inválido; se espera FOR-006 o FOR-009" },
       { status: 400 }
     );
   }
