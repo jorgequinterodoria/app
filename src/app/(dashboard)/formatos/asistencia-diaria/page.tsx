@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import QRCode from "qrcode";
 import { Suspense } from "react";
+import { esFechaPasada, hoyColombia } from "@/lib/qr-fechas";
 
 interface Empleado {
   id: string;
@@ -16,6 +17,13 @@ interface Empleado {
 interface DiaAsistencia {
   sintomas: "SI" | "NO" | "";
   novedad: string;
+}
+
+interface QrRegistro {
+  empleadoId: string;
+  fecha: string;
+  sintomas: string | null;
+  novedad: string | null;
 }
 
 function AsistenciaDiariaForm() {
@@ -32,6 +40,8 @@ function AsistenciaDiariaForm() {
   const [qrImage, setQrImage] = useState<string | null>(null);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [diaQr, setDiaQr] = useState("");
+  const [qrCells, setQrCells] = useState<Record<string, number[]>>({});
 
   useEffect(() => {
     if (!proyectoId) return;
@@ -47,17 +57,93 @@ function AsistenciaDiariaForm() {
       });
   }, [proyectoId]);
 
-  const getDays = () => {
+  const days = useMemo(() => {
     if (!fechaInicio) return [];
-    const start = new Date(fechaInicio);
+    const [y, m, d] = fechaInicio.split("-").map(Number);
+    if (!y || !m || !d) return [];
+    const start = new Date(Date.UTC(y, m - 1, d));
     return Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(start);
-      d.setDate(d.getDate() + i);
-      return d.toLocaleDateString("es-CO", { weekday: "short", day: "numeric", month: "short" });
+      const dt = new Date(start);
+      dt.setUTCDate(dt.getUTCDate() + i);
+      return {
+        iso: dt.toISOString().slice(0, 10),
+        label: dt.toLocaleDateString("es-CO", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+          timeZone: "UTC",
+        }),
+      };
     });
-  };
+  }, [fechaInicio]);
 
-  const days = getDays();
+  const diaQrActivo = useMemo(() => {
+    if (days.length === 0) return "";
+    const isos = days.map((d) => d.iso);
+    if (diaQr && isos.includes(diaQr)) return diaQr;
+    const hoy = hoyColombia();
+    return isos.includes(hoy) ? hoy : isos[0];
+  }, [days, diaQr]);
+
+  useEffect(() => {
+    if (!proyectoId || !fechaInicio || empleados.length === 0 || days.length === 0) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const [fmtRes, qrRes] = await Promise.all([
+          fetch(`/api/formatos?proyectoId=${proyectoId}&codigo=FOR-006`, { credentials: "include" }),
+          fetch(
+            `/api/qr/registros?proyectoId=${proyectoId}&formatoTipo=FOR-006&desde=${days[0].iso}&hasta=${days[days.length - 1].iso}`,
+            { credentials: "include" },
+          ),
+        ]);
+        const formatosList = fmtRes.ok ? await fmtRes.json() : [];
+        const registros: QrRegistro[] = qrRes.ok ? await qrRes.json() : [];
+        if (cancelled) return;
+
+        const guardado = [...formatosList]
+          .reverse()
+          .find((f: { datos?: { fechaInicio?: string } }) => f.datos?.fechaInicio === fechaInicio);
+        const base: Record<string, DiaAsistencia[]> | null = guardado?.datos?.asistencia ?? null;
+
+        const merged: Record<string, DiaAsistencia[]> = {};
+        for (const emp of empleados) {
+          merged[emp.id] =
+            base?.[emp.id]?.length === 7
+              ? base[emp.id].map((c) => ({
+                  sintomas: (c.sintomas || "") as DiaAsistencia["sintomas"],
+                  novedad: c.novedad || "",
+                }))
+              : Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
+        }
+
+        const fechaToIndex = new Map(days.map((d, i) => [d.iso, i] as const));
+        const marks: Record<string, number[]> = {};
+        for (const reg of registros) {
+          const dayIndex = fechaToIndex.get(reg.fecha) ?? -1;
+          if (dayIndex === -1) continue;
+          const cell = merged[reg.empleadoId]?.[dayIndex];
+          if (!cell) continue;
+          if (cell.sintomas === "" && cell.novedad === "") {
+            cell.sintomas = (reg.sintomas || "") as DiaAsistencia["sintomas"];
+            cell.novedad = reg.novedad || "";
+            if (!marks[reg.empleadoId]) marks[reg.empleadoId] = [];
+            if (!marks[reg.empleadoId].includes(dayIndex)) marks[reg.empleadoId].push(dayIndex);
+          }
+        }
+
+        setAsistencia(merged);
+        setQrCells(marks);
+      } catch {
+        // sin red o error puntual: dejar la tabla, no bloquear el formulario
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [proyectoId, fechaInicio, empleados, days]);
 
   function updateCell(empleadoId: string, dayIndex: number, field: keyof DiaAsistencia, value: string) {
     setAsistencia((prev) => {
@@ -66,6 +152,11 @@ function AsistenciaDiariaForm() {
       updated[empleadoId] = [...updated[empleadoId]];
       updated[empleadoId][dayIndex] = { ...updated[empleadoId][dayIndex], [field]: value };
       return updated;
+    });
+    setQrCells((prev) => {
+      if (!prev[empleadoId]?.includes(dayIndex)) return prev;
+      const filtered = prev[empleadoId].filter((i) => i !== dayIndex);
+      return { ...prev, [empleadoId]: filtered };
     });
   }
 
@@ -97,6 +188,10 @@ function AsistenciaDiariaForm() {
   }
 
   async function handleGenerateQr() {
+    if (!diaQrActivo) {
+      setMessage({ type: "error", text: "Seleccione el día para el QR" });
+      return;
+    }
     setGeneratingQr(true);
     setMessage(null);
 
@@ -107,12 +202,15 @@ function AsistenciaDiariaForm() {
         body: JSON.stringify({
           proyectoId,
           formatoTipo: "FOR-006",
-          durationHours: 24,
+          fecha: diaQrActivo,
         }),
         credentials: "include",
       });
 
-      if (!res.ok) throw new Error("Error al generar QR");
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Error al generar el QR");
+      }
 
       const data = await res.json();
       const fullUrl = `${window.location.origin}${data.qrUrl}`;
@@ -120,8 +218,12 @@ function AsistenciaDiariaForm() {
 
       const qrDataUrl = await QRCode.toDataURL(fullUrl, { width: 300, margin: 2 });
       setQrImage(qrDataUrl);
-    } catch {
-      setMessage({ type: "error", text: "Error al generar el QR" });
+
+      if (data.alreadyExisted) {
+        setMessage({ type: "success", text: "Este día ya tenía un QR; se muestra el existente." });
+      }
+    } catch (e) {
+      setMessage({ type: "error", text: e instanceof Error ? e.message : "Error al generar el QR" });
     } finally {
       setGeneratingQr(false);
     }
@@ -150,21 +252,37 @@ function AsistenciaDiariaForm() {
           <h1 className="text-xl font-semibold text-gray-900">Asistencia Diaria</h1>
           <p className="text-sm text-gray-500">FOR-006 - Registro de asistencia diaria del personal en obra</p>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="btn btn-primary"
-          >
-            {saving ? "Guardando..." : "Guardar"}
-          </button>
-          <button
-            onClick={handleGenerateQr}
-            disabled={generatingQr}
-            className="btn bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white"
-          >
-            {generatingQr ? "Generando..." : "Generar QR"}
-          </button>
+        <div className="flex flex-col sm:items-end gap-2">
+          <div className="flex items-center gap-2">
+            <label htmlFor="dia-qr" className="text-sm text-gray-600 whitespace-nowrap">
+              Día del QR
+            </label>
+            <select
+              id="dia-qr"
+              value={diaQrActivo}
+              onChange={(e) => setDiaQr(e.target.value)}
+              disabled={days.length === 0}
+              className="input w-auto"
+            >
+              {days.map((d) => (
+                <option key={d.iso} value={d.iso}>
+                  {d.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex gap-2">
+            <button onClick={handleSave} disabled={saving} className="btn btn-primary">
+              {saving ? "Guardando..." : "Guardar"}
+            </button>
+            <button
+              onClick={handleGenerateQr}
+              disabled={generatingQr || !diaQrActivo || esFechaPasada(diaQrActivo)}
+              className="btn bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white"
+            >
+              {generatingQr ? "Generando..." : "Generar QR"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -232,9 +350,9 @@ function AsistenciaDiariaForm() {
                 <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-45">
                   Empleado
                 </th>
-                {days.map((day, i) => (
-                  <th key={i} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-35">
-                    {day}
+                {days.map((day) => (
+                  <th key={day.iso} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-35">
+                    {day.label}
                   </th>
                 ))}
               </tr>
@@ -249,15 +367,22 @@ function AsistenciaDiariaForm() {
                   {days.map((_, dayIndex) => (
                     <td key={dayIndex} className="px-2 py-2 border-b border-gray-200">
                       <div className="flex flex-col gap-1">
-                        <select
-                          value={asistencia[emp.id]?.[dayIndex]?.sintomas || ""}
-                          onChange={(e) => updateCell(emp.id, dayIndex, "sintomas", e.target.value)}
-                          className="input"
-                        >
-                          <option value="">-</option>
-                          <option value="SI">SI</option>
-                          <option value="NO">NO</option>
-                        </select>
+                        <div className="flex items-center gap-1">
+                          <select
+                            value={asistencia[emp.id]?.[dayIndex]?.sintomas || ""}
+                            onChange={(e) => updateCell(emp.id, dayIndex, "sintomas", e.target.value)}
+                            className="input"
+                          >
+                            <option value="">-</option>
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                          </select>
+                          {qrCells[emp.id]?.includes(dayIndex) && (
+                            <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 rounded px-1 py-0.5 shrink-0">
+                              QR
+                            </span>
+                          )}
+                        </div>
                         <input
                           type="text"
                           placeholder="Novedad"
