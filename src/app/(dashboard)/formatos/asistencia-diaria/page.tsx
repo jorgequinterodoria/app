@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import QRCode from "qrcode";
 import { Suspense } from "react";
-import { esFechaPasada, hoyColombia } from "@/lib/qr-fechas";
+import { esFechaPasada, esFechaValida, formatFechaLarga, hoyColombia } from "@/lib/qr-fechas";
 
 interface Empleado {
   id: string;
@@ -26,71 +27,71 @@ interface QrRegistro {
   novedad: string | null;
 }
 
-function AsistenciaDiariaForm() {
-  const searchParams = useSearchParams();
-  const proyectoId = searchParams.get("proyectoId") || "";
+function construirAsistenciaHidratada(
+  empleados: Empleado[],
+  base: Record<string, DiaAsistencia[]> | null,
+  registros: QrRegistro[],
+  days: { iso: string }[],
+): { merged: Record<string, DiaAsistencia[]>; marks: Record<string, number[]> } {
+  const merged: Record<string, DiaAsistencia[]> = {};
+  for (const emp of empleados) {
+    merged[emp.id] =
+      base?.[emp.id]?.length === 7
+        ? base[emp.id].map((c) => ({
+            sintomas: (c.sintomas || "") as DiaAsistencia["sintomas"],
+            novedad: c.novedad || "",
+          }))
+        : Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
+  }
 
-  const [empleados, setEmpleados] = useState<Empleado[]>([]);
-  const [frenteObra, setFrenteObra] = useState("");
-  const [fechaInicio, setFechaInicio] = useState("");
-  const [fechaFin, setFechaFin] = useState("");
-  const [asistencia, setAsistencia] = useState<Record<string, DiaAsistencia[]>>({});
-  const [saving, setSaving] = useState(false);
-  const [generatingQr, setGeneratingQr] = useState(false);
-  const [qrImage, setQrImage] = useState<string | null>(null);
-  const [qrUrl, setQrUrl] = useState<string | null>(null);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [diaQr, setDiaQr] = useState("");
-  const [qrCells, setQrCells] = useState<Record<string, number[]>>({});
+  const fechaToIndex = new Map(days.map((d, i) => [d.iso, i] as const));
+  const marks: Record<string, number[]> = {};
+  for (const reg of registros) {
+    const dayIndex = fechaToIndex.get(reg.fecha) ?? -1;
+    if (dayIndex === -1) continue;
+    if (!reg.sintomas && !reg.novedad) continue;
+    const cell = merged[reg.empleadoId]?.[dayIndex];
+    if (!cell) continue;
+    if (cell.sintomas === "" && cell.novedad === "") {
+      cell.sintomas = (reg.sintomas || "") as DiaAsistencia["sintomas"];
+      cell.novedad = reg.novedad || "";
+      if (!marks[reg.empleadoId]) marks[reg.empleadoId] = [];
+      if (!marks[reg.empleadoId].includes(dayIndex)) marks[reg.empleadoId].push(dayIndex);
+    }
+  }
+  return { merged, marks };
+}
 
-  useEffect(() => {
-    if (!proyectoId) return;
-    fetch(`/api/empleados?proyectoId=${proyectoId}`, { credentials: "include" })
-      .then((res) => res.json())
-      .then((data) => {
-        setEmpleados(data);
-        const initial: Record<string, DiaAsistencia[]> = {};
-        data.forEach((emp: Empleado) => {
-          initial[emp.id] = Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
-        });
-        setAsistencia(initial);
-      });
-  }, [proyectoId]);
+function resolverDiaQr(days: { iso: string }[], diaQr: string): string {
+  if (days.length === 0) return "";
+  const isos = days.map((d) => d.iso);
+  if (diaQr && isos.includes(diaQr)) return diaQr;
+  const hoy = hoyColombia();
+  return isos.includes(hoy) ? hoy : isos[0];
+}
 
-  const days = useMemo(() => {
-    if (!fechaInicio) return [];
-    const [y, m, d] = fechaInicio.split("-").map(Number);
-    if (!y || !m || !d) return [];
-    const start = new Date(Date.UTC(y, m - 1, d));
-    return Array.from({ length: 7 }, (_, i) => {
-      const dt = new Date(start);
-      dt.setUTCDate(dt.getUTCDate() + i);
-      return {
-        iso: dt.toISOString().slice(0, 10),
-        label: dt.toLocaleDateString("es-CO", {
-          weekday: "short",
-          day: "numeric",
-          month: "short",
-          timeZone: "UTC",
-        }),
-      };
-    });
-  }, [fechaInicio]);
+type SetAsistencia = Dispatch<SetStateAction<Record<string, DiaAsistencia[]>>>;
+type SetQrCells = Dispatch<SetStateAction<Record<string, number[]>>>;
+type SetBoolean = Dispatch<SetStateAction<boolean>>;
+type SetMensaje = Dispatch<SetStateAction<{ type: "success" | "error"; text: string } | null>>;
 
-  const diaQrActivo = useMemo(() => {
-    if (days.length === 0) return "";
-    const isos = days.map((d) => d.iso);
-    if (diaQr && isos.includes(diaQr)) return diaQr;
-    const hoy = hoyColombia();
-    return isos.includes(hoy) ? hoy : isos[0];
-  }, [days, diaQr]);
-
+function useHydratarAsistencia(
+  proyectoId: string,
+  fechaInicio: string,
+  empleados: Empleado[],
+  days: { iso: string }[],
+  setAsistencia: SetAsistencia,
+  setQrCells: SetQrCells,
+  setCargandoDatos: SetBoolean,
+  setMessage: SetMensaje,
+) {
   useEffect(() => {
     if (!proyectoId || !fechaInicio || empleados.length === 0 || days.length === 0) return;
     let cancelled = false;
 
     (async () => {
       try {
+        setCargandoDatos(true);
         const [fmtRes, qrRes] = await Promise.all([
           fetch(`/api/formatos?proyectoId=${proyectoId}&codigo=FOR-006`, { credentials: "include" }),
           fetch(
@@ -107,43 +108,79 @@ function AsistenciaDiariaForm() {
           .find((f: { datos?: { fechaInicio?: string } }) => f.datos?.fechaInicio === fechaInicio);
         const base: Record<string, DiaAsistencia[]> | null = guardado?.datos?.asistencia ?? null;
 
-        const merged: Record<string, DiaAsistencia[]> = {};
-        for (const emp of empleados) {
-          merged[emp.id] =
-            base?.[emp.id]?.length === 7
-              ? base[emp.id].map((c) => ({
-                  sintomas: (c.sintomas || "") as DiaAsistencia["sintomas"],
-                  novedad: c.novedad || "",
-                }))
-              : Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
-        }
-
-        const fechaToIndex = new Map(days.map((d, i) => [d.iso, i] as const));
-        const marks: Record<string, number[]> = {};
-        for (const reg of registros) {
-          const dayIndex = fechaToIndex.get(reg.fecha) ?? -1;
-          if (dayIndex === -1) continue;
-          const cell = merged[reg.empleadoId]?.[dayIndex];
-          if (!cell) continue;
-          if (cell.sintomas === "" && cell.novedad === "") {
-            cell.sintomas = (reg.sintomas || "") as DiaAsistencia["sintomas"];
-            cell.novedad = reg.novedad || "";
-            if (!marks[reg.empleadoId]) marks[reg.empleadoId] = [];
-            if (!marks[reg.empleadoId].includes(dayIndex)) marks[reg.empleadoId].push(dayIndex);
-          }
-        }
-
+        const { merged, marks } = construirAsistenciaHidratada(empleados, base, registros, days);
         setAsistencia(merged);
         setQrCells(marks);
       } catch {
-        // sin red o error puntual: dejar la tabla, no bloquear el formulario
+        if (!cancelled) {
+          setMessage({ type: "error", text: "No se pudieron cargar los registros guardados" });
+        }
+      } finally {
+        if (!cancelled) setCargandoDatos(false);
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [proyectoId, fechaInicio, empleados, days]);
+  }, [proyectoId, fechaInicio, empleados, days, setAsistencia, setQrCells, setCargandoDatos, setMessage]);
+}
+
+function AsistenciaDiariaForm() {
+  const searchParams = useSearchParams();
+  const proyectoId = searchParams.get("proyectoId") || "";
+
+  const [empleados, setEmpleados] = useState<Empleado[]>([]);
+  const [frenteObra, setFrenteObra] = useState("");
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+  const [asistencia, setAsistencia] = useState<Record<string, DiaAsistencia[]>>({});
+  const [saving, setSaving] = useState(false);
+  const [generatingQr, setGeneratingQr] = useState(false);
+  const [qrImage, setQrImage] = useState<string | null>(null);
+  const [qrUrl, setQrUrl] = useState<string | null>(null);
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [diaQr, setDiaQr] = useState("");
+  const [qrCells, setQrCells] = useState<Record<string, number[]>>({});
+  const [cargandoDatos, setCargandoDatos] = useState(false);
+  const [qrFecha, setQrFecha] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!proyectoId) return;
+    fetch(`/api/empleados?proyectoId=${proyectoId}`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        setEmpleados(data);
+        const initial: Record<string, DiaAsistencia[]> = {};
+        data.forEach((emp: Empleado) => {
+          initial[emp.id] = Array(7).fill(null).map(() => ({ sintomas: "", novedad: "" }));
+        });
+        setAsistencia(initial);
+      });
+  }, [proyectoId]);
+
+  const days = useMemo(() => {
+    if (!fechaInicio || !esFechaValida(fechaInicio)) return [];
+    const [y, m, d] = fechaInicio.split("-").map(Number);
+    const start = new Date(Date.UTC(y, m - 1, d));
+    return Array.from({ length: 7 }, (_, i) => {
+      const dt = new Date(start);
+      dt.setUTCDate(dt.getUTCDate() + i);
+      return {
+        iso: dt.toISOString().slice(0, 10),
+        label: dt.toLocaleDateString("es-CO", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+          timeZone: "UTC",
+        }),
+      };
+    });
+  }, [fechaInicio]);
+
+  const diaQrActivo = useMemo(() => resolverDiaQr(days, diaQr), [days, diaQr]);
+
+  useHydratarAsistencia(proyectoId, fechaInicio, empleados, days, setAsistencia, setQrCells, setCargandoDatos, setMessage);
 
   function updateCell(empleadoId: string, dayIndex: number, field: keyof DiaAsistencia, value: string) {
     setAsistencia((prev) => {
@@ -215,6 +252,7 @@ function AsistenciaDiariaForm() {
       const data = await res.json();
       const fullUrl = `${window.location.origin}${data.qrUrl}`;
       setQrUrl(fullUrl);
+      setQrFecha(data.fecha);
 
       const qrDataUrl = await QRCode.toDataURL(fullUrl, { width: 300, margin: 2 });
       setQrImage(qrDataUrl);
@@ -244,6 +282,8 @@ function AsistenciaDiariaForm() {
       </div>
     );
   }
+
+  const hayRango = empleados.length > 0 && days.length > 0;
 
   return (
     <div className="space-y-6">
@@ -303,6 +343,11 @@ function AsistenciaDiariaForm() {
           <h2 className="font-semibold text-gray-900">QR de Asistencia</h2>
           <Image src={qrImage} alt="QR Code" width={220} height={220} className="rounded-lg" unoptimized />
           <p className="text-xs text-gray-500 break-all text-center max-w-xs">{qrUrl}</p>
+          {qrFecha && (
+            <p className="text-xs font-medium text-gray-700">
+              QR para el {formatFechaLarga(qrFecha)}
+            </p>
+          )}
           <button
             onClick={handleDownloadQr}
             className="btn btn-secondary"
@@ -342,65 +387,68 @@ function AsistenciaDiariaForm() {
         </div>
       </div>
 
-      {empleados.length > 0 && days.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
-          <table className="table-base">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-45">
-                  Empleado
-                </th>
-                {days.map((day) => (
-                  <th key={day.iso} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-35">
-                    {day.label}
+      {hayRango &&
+        (cargandoDatos ? (
+          <div className="text-center text-gray-500 py-8">Cargando registros...</div>
+        ) : (
+          <div className="overflow-x-auto rounded-lg border border-gray-200">
+            <table className="table-base">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 sticky left-0 bg-gray-50 border-b border-r border-gray-200 min-w-45">
+                    Empleado
                   </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {empleados.map((emp) => (
-                <tr key={emp.id} className="hover:bg-gray-50">
-                  <td className="px-3 py-2 border-b border-r border-gray-200 sticky left-0 bg-white">
-                    <div className="text-sm font-medium text-gray-900">{emp.nombre}</div>
-                    <div className="text-xs text-gray-500">{emp.identificacion}</div>
-                  </td>
-                  {days.map((_, dayIndex) => (
-                    <td key={dayIndex} className="px-2 py-2 border-b border-gray-200">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-1">
-                          <select
-                            value={asistencia[emp.id]?.[dayIndex]?.sintomas || ""}
-                            onChange={(e) => updateCell(emp.id, dayIndex, "sintomas", e.target.value)}
-                            className="input"
-                          >
-                            <option value="">-</option>
-                            <option value="SI">SI</option>
-                            <option value="NO">NO</option>
-                          </select>
-                          {qrCells[emp.id]?.includes(dayIndex) && (
-                            <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 rounded px-1 py-0.5 shrink-0">
-                              QR
-                            </span>
-                          )}
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Novedad"
-                          value={asistencia[emp.id]?.[dayIndex]?.novedad || ""}
-                          onChange={(e) => updateCell(emp.id, dayIndex, "novedad", e.target.value)}
-                          className="input"
-                        />
-                      </div>
-                    </td>
+                  {days.map((day) => (
+                    <th key={day.iso} className="px-3 py-2 text-center text-xs font-medium text-gray-500 border-b border-gray-200 min-w-35">
+                      {day.label}
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {empleados.map((emp) => (
+                  <tr key={emp.id} className="hover:bg-gray-50">
+                    <td className="px-3 py-2 border-b border-r border-gray-200 sticky left-0 bg-white">
+                      <div className="text-sm font-medium text-gray-900">{emp.nombre}</div>
+                      <div className="text-xs text-gray-500">{emp.identificacion}</div>
+                    </td>
+                    {days.map((_, dayIndex) => (
+                      <td key={dayIndex} className="px-2 py-2 border-b border-gray-200">
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-1">
+                            <select
+                              value={asistencia[emp.id]?.[dayIndex]?.sintomas || ""}
+                              onChange={(e) => updateCell(emp.id, dayIndex, "sintomas", e.target.value)}
+                              className="input"
+                            >
+                              <option value="">-</option>
+                              <option value="SI">SI</option>
+                              <option value="NO">NO</option>
+                            </select>
+                            {qrCells[emp.id]?.includes(dayIndex) && (
+                              <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 rounded px-1 py-0.5 shrink-0">
+                                QR
+                              </span>
+                            )}
+                          </div>
+                          <input
+                            type="text"
+                            placeholder="Novedad"
+                            value={asistencia[emp.id]?.[dayIndex]?.novedad || ""}
+                            onChange={(e) => updateCell(emp.id, dayIndex, "novedad", e.target.value)}
+                            className="input"
+                          />
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
 
-      {empleados.length === 0 && proyectoId && (
+      {empleados.length === 0 && (
         <div className="text-center text-gray-500 py-8">
           No hay empleados registrados para este proyecto.
         </div>
