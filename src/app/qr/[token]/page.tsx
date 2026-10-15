@@ -156,7 +156,11 @@ export default function QrAttendancePage() {
           <h1 className="text-xl font-semibold text-gray-900 text-center mb-1">
             {data?.proyecto?.nombre || "Registro de Asistencia"}
           </h1>
-          <p className="text-sm text-gray-500 text-center mb-1">
+          <p
+            className={`text-sm text-gray-500 text-center ${
+              data?.qr.fecha ? "mb-1" : "mb-6"
+            }`}
+          >
             Complete los campos para registrar su asistencia
           </p>
           {data?.qr.fecha && (
